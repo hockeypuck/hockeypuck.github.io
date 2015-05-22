@@ -1,0 +1,525 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hockeypuck</title>
+    <link type="text/css" rel="stylesheet" href="static/article.css">
+    <meta charset='utf-8'>
+  </head>
+
+  <body>
+    <div id="topbar" class="wide">
+      <div class="container">
+        <div id="heading">Hockeypuck
+          OpenPGP Public Keyserver
+        </div>
+      </div>
+    </div>
+    <div id="page" class="wide">
+      <div class="container">
+        
+          <div id="toc">
+            
+  <ul>
+  
+    <li><a href="#TOC_1.">Deploying Hockeypuck with Juju</a></li>
+    
+  <ul>
+  
+    <li><a href="#TOC_1.1.">Prerequisites</a></li>
+    
+  
+    <li><a href="#TOC_1.2.">Deploying Hockeypuck</a></li>
+    
+  
+    <li><a href="#TOC_1.3.">Accessing your new instance</a></li>
+    
+  
+    <li><a href="#TOC_1.4.">HTTP reverse-proxy</a></li>
+    
+  
+  </ul>
+
+  
+    <li><a href="#TOC_2.">Actions</a></li>
+    
+  <ul>
+  
+    <li><a href="#TOC_2.1.">fetch-keyfiles</a></li>
+    
+  <ul>
+  
+    <li><a href="#TOC_2.1.1.">Parameters</a></li>
+    
+  <ul>
+  
+    <li><a href="#TOC_2.1.1.1.">src</a></li>
+    
+  
+    <li><a href="#TOC_2.1.1.2.">dest</a></li>
+    
+  
+  </ul>
+
+  
+  </ul>
+
+  
+    <li><a href="#TOC_2.2.">load-keyfiles</a></li>
+    
+  <ul>
+  
+    <li><a href="#TOC_2.2.1.">Parameters</a></li>
+    
+  <ul>
+  
+    <li><a href="#TOC_2.2.1.1.">path</a></li>
+    
+  
+  </ul>
+
+  
+  </ul>
+
+  
+  </ul>
+
+  
+    <li><a href="#TOC_3.">Peering</a></li>
+    
+  <ul>
+  
+    <li><a href="#TOC_3.1.">Peering with Relations</a></li>
+    
+  
+    <li><a href="#TOC_3.2.">Peering with Configuration</a></li>
+    
+  
+  </ul>
+
+  
+    <li><a href="#TOC_4.">Example</a></li>
+    
+  
+  </ul>
+
+          </div>
+        
+
+        
+          
+  <h1 id="TOC_1.">1. Deploying Hockeypuck with Juju</h1>
+  
+  <h2 id="TOC_1.1.">1.1. Prerequisites</h2>
+  
+  
+  <p>
+    Juju 1.23.2 or later is recommended to make full use of this charm&#39;s
+
+
+    <a href="https://jujucharms.com/docs/stable/actions" target="_blank">juju actions</a>. Install juju with:
+  </p>
+  
+
+  
+  <div class="code"><pre>sudo apt-add-repository ppa:juju/stable
+sudo apt-get update
+sudo apt-get install juju-core</pre></div>
+  
+
+  
+  <p>
+    Also `apt-get install juju-local` if you&#39;d like to use the local provider.
+  </p>
+  
+
+  
+  <p>
+    Familiarity with Juju and a bootstrapped environment is assumed. Read the
+
+
+    <a href="https://jujucharms.com/docs/" target="_blank">Juju Documentation</a> to get started.
+  </p>
+  
+
+
+  <h2 id="TOC_1.2.">1.2. Deploying Hockeypuck</h2>
+  
+  
+  <p>
+    Deploy a Hockeypuck service:
+  </p>
+  
+
+  
+  <div class="code"><pre>juju deploy cs:~hockeypuck/trusty/hockeypuck</pre></div>
+  
+
+  
+  <p>
+    Deploy MongoDB and relate it:
+  </p>
+  
+
+  
+  <div class="code"><pre>juju deploy mongodb
+juju add-relation mongodb hockeypuck
+juju expose hockeypuck</pre></div>
+  
+
+
+  <h2 id="TOC_1.3.">1.3. Accessing your new instance</h2>
+  
+  
+  <p>
+    Find the <code>public-address</code> of the Hockeypuck workload. For example:
+  </p>
+  
+
+  
+  <div class="code"><pre>$ juju status hockeypuck
+environment: azure
+machines:
+  &#34;15&#34;:
+    agent-state: started
+    agent-version: 1.23.2
+    dns-name: juju-azure-dev-y9157oo521.cloudapp.net
+    instance-id: juju-azure-dev-y9157oo521-jujuw0fh43evjcmace0ol1gsg0kltv5dh9b7bs8chm9gjj4gmp
+    instance-state: ReadyRole
+    series: trusty
+    hardware: arch=amd64 cpu-cores=1 mem=1792M root-disk=130048M
+services:
+  hockeypuck:
+    charm: local:trusty/hockeypuck-9
+    exposed: true
+    relations:
+      mongodb:
+      - mongodb
+    units:
+      hockeypuck/0:
+        agent-state: started
+        agent-version: 1.23.2
+        machine: &#34;15&#34;
+        open-ports:
+        - 11370/tcp
+        - 11371/tcp
+        public-address: juju-azure-dev-y9157oo521.cloudapp.net</pre></div>
+  
+
+  
+  <p>
+    You should be able to access the keyserver at the listed public address,
+
+
+    <code>juju-azure-dev-y9157oo521.cloudapp.net:11371</code>
+  </p>
+  
+
+
+  <h2 id="TOC_1.4.">1.4. HTTP reverse-proxy</h2>
+  
+  
+  <p>
+    Expose Hockeypuck on port 80 behind haproxy.
+  </p>
+  
+
+  
+  <div class="code"><pre>juju deploy haproxy
+juju add-relation hockeypuck:website haproxy:reverseproxy
+juju expose haproxy</pre></div>
+  
+
+  
+  <p>
+    Or behind squid for caching.
+  </p>
+  
+
+  
+  <div class="code"><pre>juju deploy squid-reverseproxy
+juju add-relation hockeypuck:website squid-reverseproxy
+juju set squid-reverseproxy port=11371
+juju expose squid</pre></div>
+  
+
+
+
+        
+          
+  <h1 id="TOC_2.">2. Actions</h1>
+  
+  
+  <p>
+    The <a href="https://jujucharms.com/u/hockeypuck/hockeypuck/trusty/" target="_blank">Hockeypuck charm</a> provides
+
+
+    several useful Juju actions for your new keyserver.
+  </p>
+  
+
+  <h2 id="TOC_2.1.">2.1. fetch-keyfiles</h2>
+  
+  
+  <p>
+    <code>fetch-keyfiles</code> downloads OpenPGP binary keyfiles from a remote location to a local directory on the keyserver.
+  </p>
+  
+
+  <h3 id="TOC_2.1.1.">2.1.1. Parameters</h3>
+  
+  <h4 id="TOC_2.1.1.1.">2.1.1.1. src</h4>
+  
+  
+  <p>
+    Required. The remote location to fetch keyfiles from. This is expected to be a
+
+
+    directory containing concatenated OpenPGP public keys in RFC 4880 binary
+
+
+    format. These are the files typically produced by an SKS dump, and should have
+
+
+    a <code>*.pgp</code> file extension.
+  </p>
+  
+
+  
+  <p>
+    <code>rsync://</code>, <code>http://</code> and <code>ftp://</code> protocols are supported.
+  </p>
+  
+
+  
+  <p>
+    Please be mindful of the network activity that this action can place on the
+
+
+    remote server hosting the files. Use sparingly on global pool dumps; otherwise
+
+
+    mirror the files.
+  </p>
+  
+
+
+  <h4 id="TOC_2.1.1.2.">2.1.1.2. dest</h4>
+  
+  
+  <p>
+    Local directory where the files will be stored. <code>/srv/hockeypuck/import</code> is the
+
+
+    default if not specified.
+  </p>
+  
+
+
+
+
+  <h2 id="TOC_2.2.">2.2. load-keyfiles</h2>
+  
+  
+  <p>
+    Stops the hockeypuck service and loads keyfiles into Hockeypuck.
+  </p>
+  
+
+  <h3 id="TOC_2.2.1.">2.2.1. Parameters</h3>
+  
+  <h4 id="TOC_2.2.1.1.">2.2.1.1. path</h4>
+  
+  
+  <p>
+    Local directory where files will be loaded from. <code>/srv/hockeypuck/import</code> is the
+
+
+    default.
+  </p>
+  
+
+
+
+
+
+        
+          
+  <h1 id="TOC_3.">3. Peering</h1>
+  
+  <h2 id="TOC_3.1.">3.1. Peering with Relations</h2>
+  
+  
+  <p>
+    Assuming two Hockeypucks:
+  </p>
+  
+
+  
+  <div class="code"><pre>juju deploy cs:~hockeypuck/trusty/hockeypuck hkp1
+juju deploy cs:~hockeypuck/trusty/hockeypuck hkp2</pre></div>
+  
+
+  
+  <p>
+    Enable gossip between them with:
+  </p>
+  
+
+  
+  <div class="code"><pre>juju add-relation hkp1:keymaster hkp2:gatekeeper</pre></div>
+  
+
+  
+  <p>
+    Destroy the relation to stop syncing keys:
+  </p>
+  
+
+  
+  <div class="code"><pre>juju destroy-relation hkp1:keymaster hkp2:gatekeeper</pre></div>
+  
+
+  
+  <p>
+    Regardless of which service is <code>keymaster</code> or <code>gatekeeper</code>, both services will
+
+
+    initiate and serve connections.
+  </p>
+  
+
+
+  <h2 id="TOC_3.2.">3.2. Peering with Configuration</h2>
+  
+  
+  <p>
+    To peer with other keyservers (Hockeypuck or SKS servers) that aren&#39;t in your
+
+
+    Juju environment, set the config option <code>recon_partners</code>. The format of this
+
+
+    option is a space-delimited list of partners, where each partner is a
+
+
+    comma-separated pair of HTTP and recon addresses. Like this:
+  </p>
+  
+
+  
+  <div class="code"><pre>juju set hockeypuck recon_partners=&#34;peer1:http,peer1:recon peer2:http,peer2:recon&#34;</pre></div>
+  
+
+  
+  <p>
+    Note that you can specify a different host for the HTTP and recon addresses.
+
+
+    This supports connecting to peers that expose these ports on different host
+
+
+    addresses.
+  </p>
+  
+
+
+
+        
+          
+  <h1 id="TOC_4.">4. Example</h1>
+  
+<div class="image">
+  <img src="juju-env.png" width="960">
+</div>
+<p class="caption">juju-gui screenshot from a Hockeypuck deployment: two synchronizing Hockeypuck peers, using MongoDB for storage, reverse-proxied by haproxy.</p>
+  
+  <p>
+    Deploy it with this bundle:
+  </p>
+  
+
+  <div class="code" contenteditable="true" spellcheck="false">
+
+
+<pre><span num="1">envExport: </span>
+<span num="2">  services: </span>
+<span num="3">    &#34;hkp1-hockeypuck&#34;: </span>
+<span num="4">      charm: &#34;cs:~hockeypuck/trusty/hockeypuck-8&#34;</span>
+<span num="5">      num_units: 1</span>
+<span num="6">      annotations: </span>
+<span num="7">        &#34;gui-x&#34;: &#34;523&#34;</span>
+<span num="8">        &#34;gui-y&#34;: &#34;274.5&#34;</span>
+<span num="9">    &#34;hkp1-mongodb&#34;: </span>
+<span num="10">      charm: &#34;cs:trusty/mongodb-18&#34;</span>
+<span num="11">      num_units: 1</span>
+<span num="12">      options: </span>
+<span num="13">        dbpath: /mnt</span>
+<span num="14">      annotations: </span>
+<span num="15">        &#34;gui-x&#34;: &#34;753.7806788511749&#34;</span>
+<span num="16">        &#34;gui-y&#34;: &#34;274.5&#34;</span>
+<span num="17">    &#34;hkp1-haproxy&#34;: </span>
+<span num="18">      charm: &#34;cs:trusty/haproxy-6&#34;</span>
+<span num="19">      num_units: 1</span>
+<span num="20">      expose: true</span>
+<span num="21">      annotations: </span>
+<span num="22">        &#34;gui-x&#34;: &#34;638.3903394255875&#34;</span>
+<span num="23">        &#34;gui-y&#34;: &#34;74.63806941226437&#34;</span>
+<span num="24">    &#34;hkp2-hockeypuck&#34;: </span>
+<span num="25">      charm: &#34;cs:~hockeypuck/trusty/hockeypuck-8&#34;</span>
+<span num="26">      num_units: 1</span>
+<span num="27">      annotations: </span>
+<span num="28">        &#34;gui-x&#34;: &#34;407.60966057441254&#34;</span>
+<span num="29">        &#34;gui-y&#34;: &#34;74.63806941226437&#34;</span>
+<span num="30">    &#34;hkp2-mongodb&#34;: </span>
+<span num="31">      charm: &#34;cs:trusty/mongodb-18&#34;</span>
+<span num="32">      num_units: 1</span>
+<span num="33">      options: </span>
+<span num="34">        dbpath: /mnt</span>
+<span num="35">      annotations: </span>
+<span num="36">        &#34;gui-x&#34;: &#34;292.2193211488251&#34;</span>
+<span num="37">        &#34;gui-y&#34;: &#34;274.5&#34;</span>
+<span num="38">    &#34;hkp2-haproxy&#34;: </span>
+<span num="39">      charm: &#34;cs:trusty/haproxy-6&#34;</span>
+<span num="40">      num_units: 1</span>
+<span num="41">      expose: true</span>
+<span num="42">      annotations: </span>
+<span num="43">        &#34;gui-x&#34;: &#34;407.60966057441254&#34;</span>
+<span num="44">        &#34;gui-y&#34;: &#34;474.3619305877356&#34;</span>
+<span num="45">  relations: </span>
+<span num="46">    - - &#34;hkp1-mongodb:database&#34;</span>
+<span num="47">      - &#34;hkp1-hockeypuck:mongodb&#34;</span>
+<span num="48">    - - &#34;hkp1-haproxy:reverseproxy&#34;</span>
+<span num="49">      - &#34;hkp1-hockeypuck:website&#34;</span>
+<span num="50">    - - &#34;hkp2-mongodb:database&#34;</span>
+<span num="51">      - &#34;hkp2-hockeypuck:mongodb&#34;</span>
+<span num="52">    - - &#34;hkp2-haproxy:reverseproxy&#34;</span>
+<span num="53">      - &#34;hkp2-hockeypuck:website&#34;</span>
+<span num="54">    - - &#34;hkp1-hockeypuck:keymaster&#34;</span>
+<span num="55">      - &#34;hkp2-hockeypuck:gatekeeper&#34;</span>
+<span num="56">  series: trusty</span>
+</pre>
+
+
+</div>
+
+
+        
+
+        <h2>Authors</h2>
+        
+          <div class="author">
+            
+  
+  <p>
+    Casey Marshall
+  </p>
+  
+<p class="link"><a href="https://hockeypuck.github.io/" target="_blank">https://hockeypuck.github.io/</a></p>
+          </div>
+        
+      </div>
+    </div>
+    <script src='/play.js'></script>
+  </body>
+</html>

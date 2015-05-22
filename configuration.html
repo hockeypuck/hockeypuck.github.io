@@ -1,0 +1,474 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hockeypuck</title>
+    <link type="text/css" rel="stylesheet" href="static/article.css">
+    <meta charset='utf-8'>
+  </head>
+
+  <body>
+    <div id="topbar" class="wide">
+      <div class="container">
+        <div id="heading">Hockeypuck
+          OpenPGP Public Keyserver
+        </div>
+      </div>
+    </div>
+    <div id="page" class="wide">
+      <div class="container">
+        
+          <div id="toc">
+            
+  <ul>
+  
+    <li><a href="#TOC_1.">Configuration</a></li>
+    
+  <ul>
+  
+    <li><a href="#TOC_1.1.">Hosting</a></li>
+    
+  
+    <li><a href="#TOC_1.2.">Logging</a></li>
+    
+  
+    <li><a href="#TOC_1.3.">Static HTML files</a></li>
+    
+  
+    <li><a href="#TOC_1.4.">Custom HTML templates</a></li>
+    
+  
+    <li><a href="#TOC_1.5.">Storage</a></li>
+    
+  <ul>
+  
+    <li><a href="#TOC_1.5.1.">MongoDB</a></li>
+    
+  
+    <li><a href="#TOC_1.5.2.">PostgreSQL</a></li>
+    
+  
+  </ul>
+
+  
+    <li><a href="#TOC_1.6.">Peering</a></li>
+    
+  <ul>
+  
+    <li><a href="#TOC_1.6.1.">Local peer options</a></li>
+    
+  
+    <li><a href="#TOC_1.6.2.">Adding remote peers</a></li>
+    
+  <ul>
+  
+    <li><a href="#TOC_1.6.2.1.">Protocol and network options</a></li>
+    
+  
+    <li><a href="#TOC_1.6.2.2.">Prefix tree location</a></li>
+    
+  
+  </ul>
+
+  
+  </ul>
+
+  
+  </ul>
+
+  
+  </ul>
+
+          </div>
+        
+
+        
+          
+  <h1 id="TOC_1.">1. Configuration</h1>
+  
+  
+  <p>
+    Hockeypuck reads configuration from a TOML-format configuration file.
+  </p>
+  
+
+  <h2 id="TOC_1.1.">1.1. Hosting</h2>
+  
+  
+  <div class="code"><pre>[hockeypuck]
+contact=0xF79362DA44A2D1DB
+hostname=keys.cmarstech.com</pre></div>
+  
+
+  
+  <p>
+    These settings are displayed on the stats page (/pks/lookup?op=stats). The
+
+
+    <code>contact</code> field should contain the long key ID or full fingerprint of the
+
+
+    keyserver administrator. The <code>hostname</code> field should be set to the external
+
+
+    hostname of the server (which may differ from the keyserver host, if
+
+
+    reverse-proxied). <code>hostname</code> may be used to identify the server in
+
+
+    synchronizing pool.
+  </p>
+  
+
+
+  <h2 id="TOC_1.2.">1.2. Logging</h2>
+  
+  
+  <div class="code"><pre>[hockeypuck]
+logfile=&#34;/path/to/logfile&#34;
+loglevel=&lt;one of: DEBUG,INFO,WARNING,ERROR,FATAL,PANIC&gt;</pre></div>
+  
+
+  
+  <p>
+    If not configured, hockeypuck will log INFO level messages and higher severity
+
+
+    to standard error.
+  </p>
+  
+
+
+  <h2 id="TOC_1.3.">1.3. Static HTML files</h2>
+  
+  
+  <p>
+    Hockeypuck will serve static files from <code>/</code> out of the <code>webroot</code> path, so long as
+
+
+    the path names do not conflict with HKP routed requests (like <code>/pks/lookup</code>).
+  </p>
+  
+
+  
+  <div class="code"><pre>[hockeypuck]
+webroot=&#34;/path/to/www/files&#34;</pre></div>
+  
+
+  
+  <p>
+    <code>index.html</code> will be served by default if the path resolves to a directory and
+
+
+    the file exists.
+  </p>
+  
+
+
+  <h2 id="TOC_1.4.">1.4. Custom HTML templates</h2>
+  
+  
+  <p>
+    By default, Hockeypuck will respond to HKP operations <code>op=index</code>, <code>op=vindex</code>
+
+
+    and <code>op=stats</code> with an <code>application/json</code> response. The underlying
+
+
+    structs for these responses can be used in HTML templates of your own design
+
+
+    to customize the output.
+  </p>
+  
+
+  
+  <p>
+    Specify these templates with:
+  </p>
+  
+
+  
+  <div class="code"><pre>[hockeypuck]
+indexTemplate=&#34;/path/to/template&#34;
+vindexTemplate=&#34;/path/to/template&#34;
+statsTemplate=&#34;/path/to/template&#34;</pre></div>
+  
+
+  
+  <p>
+    The path must be to a file containing a valid Go
+
+
+    <a href="https://golang.org/pkg/html/template/" target="_blank">html/template</a>.
+  </p>
+  
+
+  
+  <p>
+    <code>indexTemplate</code> and <code>vindexTemplate</code> operate on a struct containing two top-level fields,
+  </p>
+  
+
+  <ul>
+  
+    <li><code>.Query</code>, an instance of the <a href="https://godoc.org/gopkg.in/hockeypuck/hkp.v1#Lookup" target="_blank">hkp.Lookup</a> request parameters.</li>
+  
+    <li><code>.Keys</code>, a slice of <a href="https://godoc.org/gopkg.in/hockeypuck/hkp.v1/jsonhkp#PrimaryKey" target="_blank">jsonhkp.PrimaryKey</a> model structs.</li>
+  
+  </ul>
+
+  
+  <p>
+    <code>statsTemplate</code> operates on an instance of <a href="https://github.com/hockeypuck/server/blob/38c262ad65376d38727271cbbc5a71123672de70/server.go#L126" target="_blank">server.stats</a>.
+  </p>
+  
+
+  
+  <p>
+    See the <a href="https://github.com/hockeypuck/packaging/tree/master/instroot/var/lib/hockeypuck/templates" target="_blank">packaged templates</a> for an example.
+  </p>
+  
+
+
+  <h2 id="TOC_1.5.">1.5. Storage</h2>
+  
+  <h3 id="TOC_1.5.1.">1.5.1. MongoDB</h3>
+  
+  
+  <p>
+    If storage is not otherwise configured, Hockeypuck defaults to connecting to a
+
+
+    MongoDB server at <code>localhost:27017</code>. This is effectively:
+  </p>
+  
+
+  
+  <div class="code"><pre>[hockeypuck.openpgp.db]
+driver=&#34;mongo&#34;
+dsn=&#34;localhost:27017&#34;</pre></div>
+  
+
+  
+  <p>
+    The <code>dsn</code> field is just the <i>host:port</i> of the MongoDB server.
+  </p>
+  
+
+  
+  <p>
+    With MongoDB, Hockeypuck uses database name <code>hkp</code> and collection name <code>keys</code> by default. This can be changed with the options:
+  </p>
+  
+
+  
+  <div class="code"><pre>[hockeypuck.openpgp.db.mongo]
+db=dbname
+collection=collection_name</pre></div>
+  
+
+
+  <h3 id="TOC_1.5.2.">1.5.2. PostgreSQL</h3>
+  
+  
+  <p>
+    PostgreSQL &gt;= 9.4 is required for use with Hockeypuck, as the JSONB data type is used to store most of the public key material. Some fields are broken out into separate columns for indexing. For details, refer to the PostgreSQL storage backend, <a href="https://gopkg.in/hockeypuck/pghkp.v1" target="_blank">pghkp.v1</a>.
+  </p>
+  
+
+  
+  <p>
+    To use PostgreSQL:
+  </p>
+  
+
+  
+  <div class="code"><pre>[hockeypuck.openpgp.db]
+driver=&#34;postgres-jsonb&#34;
+dsn=&#34;database=hkp host=/var/run/postgresql port=5432 sslmode=disable&#34;</pre></div>
+  
+
+  
+  <p>
+    See the <a href="https://godoc.org/github.com/lib/pq" target="_blank">pq driver package documentation</a> for details on how to construct the connection string.
+  </p>
+  
+
+
+
+  <h2 id="TOC_1.6.">1.6. Peering</h2>
+  
+  
+  <p>
+    Hockeypuck supports the SKS reconciliation (recon) protocol.
+  </p>
+  
+
+  <h3 id="TOC_1.6.1.">1.6.1. Local peer options</h3>
+  
+  
+  <div class="code"><pre>[hockeypuck.conflux.recon]
+httpAddr=&#34;:11371&#34;
+reconAddr=&#34;:11370&#34;</pre></div>
+  
+
+  
+  <p>
+    The above are default settings if not otherwise specified.
+  </p>
+  
+
+  
+  <p>
+    <code>httpAddr</code> determines the address that will be advertised to remote peers for
+
+
+    retrieving key material with <code>/pks/hashquery</code> requests.
+  </p>
+  
+
+  
+  <p>
+    <code>reconAddr</code> determines the listen address for the recon server. This is
+
+
+    conventionally <code>:11370</code> among SKS keyservers.
+  </p>
+  
+
+
+  <h3 id="TOC_1.6.2.">1.6.2. Adding remote peers</h3>
+  
+  
+  <div class="code"><pre>[hockeypuck.conflux.recon.partner.peer1]
+httpAddr=&#34;keys.cmarstech.com:11371&#34;
+reconAddr=&#34;keys.cmarstech.com:11370&#34;
+
+[hockeypuck.conflux.recon.partner.peer2]
+httpAddr=&#34;juju-azure-dev-y9157oo521.cloudapp.net:11371&#34;
+reconAddr=&#34;juju-azure-dev-y9157oo521.cloudapp.net:11370&#34;</pre></div>
+  
+
+  
+  <p>
+    Create a section for each peer <code>[hockeypuck.conflux.recon.partner.peername]</code>,
+
+
+    where <i>peername</i> is a unique logical name given to each peer (it doesn&#39;t have to relate
+
+
+    to the hostnames or anything).
+  </p>
+  
+
+  
+  <p>
+    Each peer must declare a <code>httpAddr</code> and <code>reconAddr</code>. These are <i>usually</i> the
+
+
+    same host, but they might differ, especially if the HKP service is
+
+
+    reverse-proxied.
+  </p>
+  
+
+  <h4 id="TOC_1.6.2.1.">1.6.2.1. Protocol and network options</h4>
+  
+  
+  <div class="code"><pre>[hockeypuck.conflux.recon]
+version=&#34;1.1.3&#34;                # this is default
+allowCIDRs=[&#34;10.0.0.1/8&#34;]      # default is []
+filters=[&#34;yminsky.dedup&#34;]      # default is []</pre></div>
+  
+
+  
+  <p>
+    <code>version</code> is the protocol compatibility version (SKS release version)
+
+
+    advertised to remote peers. Hockeypuck does not use this field.
+  </p>
+  
+
+  
+  <p>
+    <code>allowCIDRS</code> is used to allow incoming recon connections from remote addresses
+
+
+    other than the defined peers. This is especially useful when inbound
+
+
+    connections to Hockeypuck are subject to NAT (some cloud providers do this). If
+
+
+    not specified, inbound connections are only allowed from partner IP addresses.
+  </p>
+  
+
+  
+  <p>
+    <code>filters</code> are labels that indicate the type of processing that has been applied
+
+
+    to key material. Recent versions of SKS typically require
+
+
+    <code>filters=[&#34;yminsky.dedup&#34;]</code>, which indicates that duplicate PGP packets have
+
+
+    been dropped from key material. Hockeypuck deduplicates key material
+
+
+    regardless; this field is only used for protocol compatibility with SKS.
+  </p>
+  
+
+
+  <h4 id="TOC_1.6.2.2.">1.6.2.2. Prefix tree location</h4>
+  
+  
+  <div class="code"><pre>[hockeypuck.conflux.recon.leveldb]
+path=&#34;/path/to/prefix/tree&#34;</pre></div>
+  
+
+  
+  <p>
+    The prefix tree is used to keep track of which keys the peer has, for
+
+
+    synchronization purposes.
+  </p>
+  
+
+  
+  <p>
+    The <code>path</code> given should be a writeable directory that already exists.
+  </p>
+  
+
+
+
+
+
+        
+
+        <h2>Authors</h2>
+        
+          <div class="author">
+            
+  
+  <p>
+    Casey Marshall
+  </p>
+  
+<p class="link"><a href="https://hockeypuck.github.io/" target="_blank">https://hockeypuck.github.io/</a></p>
+          </div>
+        
+      </div>
+    </div>
+    <script src='/play.js'></script>
+  </body>
+</html>
