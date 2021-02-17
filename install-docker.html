@@ -1,0 +1,140 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hockeypuck</title>
+    <link type="text/css" rel="stylesheet" href="static/article.css">
+    <meta charset='utf-8'>
+  </head>
+
+  <body>
+    <div id="topbar" class="wide">
+      <div class="container">
+        <div id="heading">Hockeypuck
+          OpenPGP Public Keyserver
+        </div>
+      </div>
+    </div>
+    <div id="page" class="wide">
+      <div class="container">
+        
+          <div id="toc">
+            
+  <ul>
+  
+    <li><a href="#TOC_1.">Install with Docker</a></li>
+    
+  
+    <li><a href="#TOC_2.">Prerequisites</a></li>
+    
+  
+    <li><a href="#TOC_3.">Install Hockeypuck</a></li>
+    
+  
+    <li><a href="#TOC_4.">Configure Hockeypuck</a></li>
+    
+  
+    <li><a href="#TOC_5.">Populate and start the service</a></li>
+    
+  
+  </ul>
+
+  
+  </ul>
+
+          </div>
+        
+
+        
+          
+  <h1 id="TOC_1.">1. Install with Docker</h1>
+  
+  <p>
+  Installation can also be achieved using <code>Docker</code> and <code>docker-compose</code>.
+  </p>
+
+        
+          
+  <h1 id="TOC_2.">2. Prerequisites</h1>
+  
+  <p>
+  Any host being able to run a somewhat recent version of <code>git</code> and <code>docker-compose</code> is suitable.
+  </p>
+  
+
+
+
+        
+          
+  <h1 id="TOC_3.">3. Install Hockeypuck</h1>
+  
+  
+  <div class="code"><pre>git clone https://github.com/hockeypuck/hockeypuck.git
+cd hockeypuck
+git checkout 042ea97 # Current master does not build
+docker-compose build</pre></div>
+  
+
+
+        
+          
+  <h1 id="TOC_4.">4. Configure Hockeypuck</h1>
+  
+  
+  <p>
+  Edit <code>docker-compose.yml</code> to expose <code>/hockeypuck/etc</code> as <code>./etc</code> by adding <code>- "./etc:/hockeypuck/etc"</code> to hockeypuck's <code>volumes:</code>.
+  </p>
+  <p>
+    Edit the <a href="configuration.html" target="_self">configuration</a> file <code>./etc/hockeypuck.conf</code>. Make sure it includes the following part:
+  </p>
+  <div class="code"><pre>[hockeypuck.conflux.recon.leveldb]
+path="/hockeypuck/data/ptree"</pre></div>
+  
+
+
+        
+          
+  <h1 id="TOC_8.">8. Populate and start the service</h1>
+  
+  
+  <p>
+  Edit <code>docker-compose.yml</code> to expose <code>/hockeypuck/data</code> as <code>./data</code> by adding <code>- "./etc:/hockeypuck/etc"</code> to hockeypuck's <code>volumes:</code> <b>and removing <code>hkp_data: {}</code> from the global <code>volumes:</code> section.</b>
+  </p>
+  <p>
+  Create <code>./data/keydump</code> and populate it with a keydump, e.g. from a location listed in the <a href="https://github.com/SKS-Keyserver/sks-keyserver/wiki/KeydumpSources">KeydumpSources</a>.
+  </p>
+  <p>
+  Edit <code>docker-compose.yml</code> to set hockeypuck's <code>entrypoint: "/bin/bash"</code> and <code>command: -c "sleep 3600", so you can start the docker image without starting the keyserver.
+  </p>
+  <p>Run the docker images:</p>
+  
+  <div class="code"><pre>docker-compose up -d</pre></div>
+  
+  <p>Import the keydump (expect this to take at least a day, so consider running it inside <code>screen</code>:</p>
+
+  <div class="code"><pre>docker-compose exec hockeypuck /bin/bash
+cd /hockeypuck &amp;&amp; bin/hockeypuck-load -config etc/hockeypuck.conf data/keydump/\*.pgp</pre></div>
+
+  <p>Undo the <code>entrypoint</code> and <code>command</code> changes from above. Then, run your server for real:</p>
+
+  <div class="code"><pre>docker-compose up -d</pre></div>
+
+        
+
+        <h2>Authors</h2>
+        
+          <div class="author">
+            
+  
+  <p>
+    Casey Marshall, Marcel Waldvogel
+  </p>
+  
+<p class="link"><a href="https://hockeypuck.github.io/" target="_blank">https://hockeypuck.github.io/</a></p>
+          </div>
+        
+      </div>
+    </div>
+    <script src='/play.js'></script>
+  </body>
+</html>
