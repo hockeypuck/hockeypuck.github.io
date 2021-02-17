@@ -50,7 +50,7 @@
   <h1 id="TOC_1.">1. Install with Docker</h1>
   
   <p>
-  Installation can also be achieved using <code>Docker</code> and <code>docker-compose</code>.
+  Probably the simplest way to get up to speed with Hockeypuck is using <code>Docker</code> and <code>docker-compose</code>.
   </p>
 
         
@@ -71,7 +71,6 @@
   
   <div class="code"><pre>git clone https://github.com/hockeypuck/hockeypuck.git
 cd hockeypuck
-git checkout 042ea97 # Current master does not build
 docker-compose build</pre></div>
   
 
@@ -82,42 +81,26 @@ docker-compose build</pre></div>
   
   
   <p>
-  Edit <code>docker-compose.yml</code> to expose <code>/hockeypuck/etc</code> as <code>./etc</code> by adding <code>- "./etc:/hockeypuck/etc"</code> to hockeypuck's <code>volumes:</code>.
+  Create and edit the <a href="configuration.html" target="_self">configuration</a> file in <code>./etc/hockeypuck.conf</code>. Use <code>./contrib/docker-compose/devel/hockeypuck/etc/hockeypuck.conf</code> as a start.
   </p>
-  <p>
-    Edit the <a href="configuration.html" target="_self">configuration</a> file <code>./etc/hockeypuck.conf</code>. Make sure it includes the following part:
-  </p>
-  <div class="code"><pre>[hockeypuck.conflux.recon.leveldb]
-path="/hockeypuck/data/ptree"</pre></div>
   
 
 
         
           
-  <h1 id="TOC_8.">8. Populate and start the service</h1>
+  <h1 id="TOC_5.">5. Populate and start the service</h1>
   
   
   <p>
-  Edit <code>docker-compose.yml</code> to expose <code>/hockeypuck/data</code> as <code>./data</code> by adding <code>- "./etc:/hockeypuck/etc"</code> to hockeypuck's <code>volumes:</code> <b>and removing <code>hkp_data: {}</code> from the global <code>volumes:</code> section.</b>
-  </p>
-  <p>
-  Create <code>./data/keydump</code> and populate it with a keydump, e.g. from a location listed in the <a href="https://github.com/SKS-Keyserver/sks-keyserver/wiki/KeydumpSources">KeydumpSources</a>.
-  </p>
-  <p>
-  Edit <code>docker-compose.yml</code> to set hockeypuck's <code>entrypoint: "/bin/bash"</code> and <code>command: -c "sleep 3600", so you can start the docker image without starting the keyserver.
+  Create <code>./keydump/</code> directory and populate it with a keydump, e.g. from a location listed in the <a href="https://github.com/SKS-Keyserver/sks-keyserver/wiki/KeydumpSources">KeydumpSources</a>.
   </p>
   <p>Run the docker images:</p>
   
   <div class="code"><pre>docker-compose up -d</pre></div>
   
-  <p>Import the keydump (expect this to take at least a day, so consider running it inside <code>screen</code>:</p>
+  <p>This will first import the keydump; expect this to take a day at least. To follow the progress or see error messages, use:</p>
 
-  <div class="code"><pre>docker-compose exec hockeypuck /bin/bash
-cd /hockeypuck &amp;&amp; bin/hockeypuck-load -config etc/hockeypuck.conf data/keydump/\*.pgp</pre></div>
-
-  <p>Undo the <code>entrypoint</code> and <code>command</code> changes from above. Then, run your server for real:</p>
-
-  <div class="code"><pre>docker-compose up -d</pre></div>
+  <div class="code"><pre>docker-compose logs --follow</pre></div>
 
         
 
