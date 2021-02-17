@@ -37,6 +37,9 @@
     <li><a href="#TOC_5.">Populate and start the service</a></li>
     
   
+    <li><a href="#TOC_6.">Make available as HTTPS</a></li>
+    
+  
   </ul>
 
   
@@ -103,6 +106,17 @@ docker-compose build</pre></div>
   <div class="code"><pre>docker-compose logs --follow</pre></div>
 
         
+          
+  <h1 id="TOC_6.">6. Make available as HTTPS</h1>
+  
+  
+  <p>The easiest way to make this or any other service available under HTTPS is to use [https-portal](https://github.com/SteveLTN/https-portal). Clone it in a separate directory, and edit <code>docker-compose.yml</code> to include:</p>
+
+  <div class="code"><pre>environment:
+  DOMAINS: |
+    keyserver.example.com -> http://dockerhost:11371,</pre></div>
+
+  <p>You can add more redirects, proxies, and native directories easily by appending it to the <code>DOMAINS</code> environment variable.</p>
 
         <h2>Authors</h2>
         
