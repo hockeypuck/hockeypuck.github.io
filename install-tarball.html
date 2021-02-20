@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -6,7 +5,6 @@
     <link type="text/css" rel="stylesheet" href="static/article.css">
     <meta charset='utf-8'>
   </head>
-
   <body>
     <div id="topbar" class="wide">
       <div class="container">
@@ -17,155 +15,61 @@
     </div>
     <div id="page" class="wide">
       <div class="container">
-        
           <div id="toc">
-            
   <ul>
-  
     <li><a href="#TOC_1.">Installing a binary tarball release</a></li>
-    
-  
     <li><a href="#TOC_2.">Download</a></li>
-    
-  
     <li><a href="#TOC_3.">Install</a></li>
-    
   <ul>
-  
     <li><a href="#TOC_3.1.">Extract into &#39;/&#39;</a></li>
-    
-  
     <li><a href="#TOC_3.2.">Or chroot, run in a container, etc.</a></li>
-    
-  
   </ul>
-
-  
     <li><a href="#TOC_4.">Packaging</a></li>
-    
-  
     <li><a href="#TOC_5.">Running</a></li>
-    
-  
     <li><a href="#TOC_6.">Next steps</a></li>
-    
-  
   </ul>
-
           </div>
-        
-
-        
-          
   <h1 id="TOC_1.">1. Installing a binary tarball release</h1>
-  
-
-        
-          
   <h1 id="TOC_2.">2. Download</h1>
-  
-  
   <p>
     Download a [[https://github.com/hockeypuck/hockeypuck/releases][gzip-compressed tar archive release from
-
-
     Github]] for your operating
-
-
     system and architecture. Generally, Hockeypuck can be built for any Unix-like
-
-
     platform that the Go language compiler and linker supports.
   </p>
-  
-
-
-        
-          
   <h1 id="TOC_3.">3. Install</h1>
-  
   <h2 id="TOC_3.1.">3.1. Extract into &#39;/&#39;</h2>
-  
-  
   <p>
     The archive can be extracted into &#39;/&#39;. This will preserve the path references
-
-
     in the archived files.
   </p>
-  
-
-
   <h2 id="TOC_3.2.">3.2. Or chroot, run in a container, etc.</h2>
-  
-  
   <p>
     For added security, you could extract into an arbitrary path and chroot the
-
-
     Hockeypuck process, or extract it over an LXC rootfs. If you do this, consider
-
-
     the implications for a local UNIX domain socket connection to PostgreSQL.
   </p>
-  
-
-
-
-        
-          
   <h1 id="TOC_4.">4. Packaging</h1>
-  
-  
   <p>
     The Hockeypuck binary archive distributions could be a useful starting point to
-
-
     build packages for other operating system distributions. Contributions to the <a href="https://github.com/hockeypuck/packaging" target="_blank">packaging</a> project would be welcome for RPMs, BSD ports, etc.
   </p>
-  
-
-
-        
-          
   <h1 id="TOC_5.">5. Running</h1>
-  
-  
   <p>
     Run Hockeypuck with:
   </p>
-  
-
-  
   <div class="code"><pre>/usr/bin/hockeypuck -config /etc/hockeypuck/hockeypuck.conf</pre></div>
-  
-
-
-        
-          
   <h1 id="TOC_6.">6. Next steps</h1>
-  
   <ul>
-  
     <li><a href="configuration.html" target="_self">Configure</a> the Hockeypuck server.</li>
-  
   </ul>
-
-
-        
-
         <h2>Authors</h2>
-        
           <div class="author">
-            
-  
   <p>
     Casey Marshall
   </p>
-  
 <p class="link"><a href="https://hockeypuck.github.io/" target="_blank">https://hockeypuck.github.io/</a></p>
           </div>
-        
       </div>
     </div>
     <script src='/play.js'></script>

@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -6,7 +5,6 @@
     <link type="text/css" rel="stylesheet" href="static/article.css">
     <meta charset='utf-8'>
   </head>
-
   <body>
     <div id="topbar" class="wide">
       <div class="container">
@@ -17,119 +15,54 @@
     </div>
     <div id="page" class="wide">
       <div class="container">
-        
           <div id="toc">
-            
   <ul>
-  
     <li><a href="#TOC_1.">Install with Docker</a></li>
-    
-  
     <li><a href="#TOC_2.">Prerequisites</a></li>
-    
-  
     <li><a href="#TOC_3.">Install Hockeypuck</a></li>
-    
-  
     <li><a href="#TOC_4.">Configure Hockeypuck</a></li>
-    
-  
     <li><a href="#TOC_5.">Populate and start the service</a></li>
-    
-  
     <li><a href="#TOC_6.">Make available as HTTPS</a></li>
-    
-  
   </ul>
-
-  
   </ul>
-
           </div>
-        
-
-        
-          
   <h1 id="TOC_1.">1. Install with Docker</h1>
-  
   <p>
   Probably the simplest way to get up to speed with Hockeypuck is using <code>Docker</code> and <code>docker-compose</code>.
   </p>
-
-        
-          
   <h1 id="TOC_2.">2. Prerequisites</h1>
-  
   <p>
   Any host being able to run a somewhat recent version of <code>git</code> and <code>docker-compose</code> is suitable.
   </p>
-  
-
-
-
-        
-          
   <h1 id="TOC_3.">3. Install Hockeypuck</h1>
-  
-  
   <div class="code"><pre>git clone https://github.com/hockeypuck/hockeypuck.git
 cd hockeypuck
 docker-compose build</pre></div>
-  
-
-
-        
-          
   <h1 id="TOC_4.">4. Configure Hockeypuck</h1>
-  
-  
   <p>
   Create and edit the <a href="configuration.html" target="_self">configuration</a> file in <code>./etc/hockeypuck.conf</code>. Use <code>./contrib/docker-compose/devel/hockeypuck/etc/hockeypuck.conf</code> as a start.
   </p>
-  
-
-
-        
-          
   <h1 id="TOC_5.">5. Populate and start the service</h1>
-  
-  
   <p>
   Create <code>./keydump/</code> directory and populate it with a keydump, e.g. from a location listed in the <a href="https://github.com/SKS-Keyserver/sks-keyserver/wiki/KeydumpSources">KeydumpSources</a>.
   </p>
   <p>Run the docker images:</p>
-  
   <div class="code"><pre>docker-compose up -d</pre></div>
-  
   <p>This will first import the keydump; expect this to take a day at least. To follow the progress or see error messages, use:</p>
-
   <div class="code"><pre>docker-compose logs --follow</pre></div>
-
-        
-          
   <h1 id="TOC_6.">6. Make available as HTTPS</h1>
-  
-  
   <p>The easiest way to make this or any other service available under HTTPS is to use [https-portal](https://github.com/SteveLTN/https-portal). Clone it in a separate directory, and edit <code>docker-compose.yml</code> to include:</p>
-
   <div class="code"><pre>environment:
   DOMAINS: |
     keyserver.example.com -> http://dockerhost:11371,</pre></div>
-
   <p>You can add more redirects, proxies, and native directories easily by appending it to the <code>DOMAINS</code> environment variable.</p>
-
         <h2>Authors</h2>
-        
           <div class="author">
-            
-  
   <p>
     Casey Marshall, Marcel Waldvogel
   </p>
-  
 <p class="link"><a href="https://hockeypuck.github.io/" target="_blank">https://hockeypuck.github.io/</a></p>
           </div>
-        
       </div>
     </div>
     <script src='/play.js'></script>

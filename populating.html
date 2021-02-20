@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -6,7 +5,6 @@
     <link type="text/css" rel="stylesheet" href="static/article.css">
     <meta charset='utf-8'>
   </head>
-
   <body>
     <div id="topbar" class="wide">
       <div class="container">
@@ -17,107 +15,46 @@
     </div>
     <div id="page" class="wide">
       <div class="container">
-        
           <div id="toc">
-            
   <ul>
-  
     <li><a href="#TOC_1.">Populating</a></li>
-    
   <ul>
-  
     <li><a href="#TOC_1.1.">Fetch a dump of recent keyfiles</a></li>
-    
-  
     <li><a href="#TOC_1.2.">Stop the Hockeypuck service</a></li>
-    
-  
     <li><a href="#TOC_1.3.">Load keyfiles</a></li>
-    
-  
     <li><a href="#TOC_1.4.">Start the Hockeypuck service</a></li>
-    
-  
   </ul>
-
-  
   </ul>
-
           </div>
-        
-
-        
-          
   <h1 id="TOC_1.">1. Populating</h1>
-  
-  
   <p>
     If you want Hockeypuck to peer with other keyservers, you will need to populate
-
-
     your Hockeypuck instance to share as many public keys with prospective peers as
-
-
     possible before joining a pool of synchronizing key servers.
   </p>
-  
-
-  
   <p>
     The process is the same whether using MongoDB or PostgreSQL storage drivers.
   </p>
-  
-
   <h2 id="TOC_1.1.">1.1. Fetch a dump of recent keyfiles</h2>
-  
-  
   <p>
     In Hockeypuck development and testing, I&#39;ve used the sources listed at
-
-
     <a href="https://bitbucket.org/skskeyserver/sks-keyserver/wiki/KeydumpSources" target="_blank">bitbucket.org/skskeyserver/sks-keyserver/wiki/KeydumpSources</a>.
   </p>
-  
-
-
   <h2 id="TOC_1.2.">1.2. Stop the Hockeypuck service</h2>
-  
-
   <h2 id="TOC_1.3.">1.3. Load keyfiles</h2>
-  
-  
   <div class="code"><pre>hockeypuck-load -config /etc/hockeypuck/hockeypuck.conf /path/to/keyfiles/\*.pgp</pre></div>
-  
-
-  
   <p>
     If you installed from PPA on Ubuntu, you&#39;ll want to do this as the <code>hockeypuck</code> user:
   </p>
-  
-
-  
   <div class="code"><pre>su - hockeypuck -c &#39;hockeypuck-load -config /etc/hockeypuck/hockeypuck.conf /path/to/keyfiles/\*.pgp&#39;</pre></div>
-  
-
-
   <h2 id="TOC_1.4.">1.4. Start the Hockeypuck service</h2>
-  
-
-
-        
-
         <h2>Authors</h2>
-        
           <div class="author">
-            
-  
   <p>
     Casey Marshall
   </p>
-  
 <p class="link"><a href="https://hockeypuck.github.io/" target="_blank">https://hockeypuck.github.io/</a></p>
           </div>
-        
       </div>
     </div>
     <script src='/play.js'></script>
