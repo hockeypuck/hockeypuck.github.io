@@ -42,10 +42,7 @@
     
   <ul>
   
-    <li><a href="#TOC_1.5.1.">MongoDB</a></li>
-    
-  
-    <li><a href="#TOC_1.5.2.">PostgreSQL</a></li>
+    <li><a href="#TOC_1.5.1.">PostgreSQL</a></li>
     
   
   </ul>
@@ -96,8 +93,8 @@
   
   
   <div class="code"><pre>[hockeypuck]
-contact=0xF79362DA44A2D1DB
-hostname=keys.cmarstech.com</pre></div>
+contact="F79362DA44A2D1DB"
+hostname="keys.cmarstech.com"</pre></div>
   
 
   
@@ -234,43 +231,7 @@ statsTemplate=&#34;/path/to/template&#34;</pre></div>
 
   <h2 id="TOC_1.5.">1.5. Storage</h2>
   
-  <h3 id="TOC_1.5.1.">1.5.1. MongoDB</h3>
-  
-  
-  <p>
-    If storage is not otherwise configured, Hockeypuck defaults to connecting to a
-
-
-    MongoDB server at <code>localhost:27017</code>. This is effectively:
-  </p>
-  
-
-  
-  <div class="code"><pre>[hockeypuck.openpgp.db]
-driver=&#34;mongo&#34;
-dsn=&#34;localhost:27017&#34;</pre></div>
-  
-
-  
-  <p>
-    The <code>dsn</code> field is just the <i>host:port</i> of the MongoDB server.
-  </p>
-  
-
-  
-  <p>
-    With MongoDB, Hockeypuck uses database name <code>hkp</code> and collection name <code>keys</code> by default. This can be changed with the options:
-  </p>
-  
-
-  
-  <div class="code"><pre>[hockeypuck.openpgp.db.mongo]
-db=dbname
-collection=collection_name</pre></div>
-  
-
-
-  <h3 id="TOC_1.5.2.">1.5.2. PostgreSQL</h3>
+  <h3 id="TOC_1.5.1.">1.5.1. PostgreSQL</h3>
   
   
   <p>
@@ -464,11 +425,10 @@ path=&#34;/path/to/prefix/tree&#34;</pre></div>
     Casey Marshall
   </p>
   
-<p class="link"><a href="https://hockeypuck.github.io/" target="_blank">https://hockeypuck.github.io/</a></p>
+<p class="link"><a href="https://hockeypuck.io/" target="_blank">https://hockeypuck.io/</a></p>
           </div>
         
       </div>
     </div>
-    <script src='/play.js'></script>
   </body>
 </html>

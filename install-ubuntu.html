@@ -145,14 +145,16 @@ sudo apt-get update</pre></div>
   
   
   <p>
-    Edit the <a href="configuration.html" target="_self">configuration</a> file <code>/etc/hockeypuck/hockeypuck.conf</code>.
+    Edit the <a href="configuration.html" target="_self">configuration</a> file <code>/etc/hockeypuck/hockeypuck.conf</code>.  
+    Basic templates for mongoDB and PostgreSQL are provided, and should be copied to <code>/etc/hockeypuck/hockeypuck.conf</code>
+    and edited to suit your needs, and to add any remote peers.
   </p>
   
 
 
         
           
-  <h1 id="TOC_7.">7. Running from user-space</h1>
+  <h1 id="TOC_7.">7. Running from user-space (optional)</h1>
   
   
   <p>
@@ -161,7 +163,8 @@ sudo apt-get update</pre></div>
   
 
   
-  <div class="code"><pre>/usr/bin/hockeypuck -config /path/to/custom/hockeypuck.conf</pre></div>
+  <div class="code"><pre>sudo -i -u hockeypuck
+  /usr/bin/hockeypuck -config /path/to/custom/hockeypuck.conf</pre></div>
   
 
 
@@ -204,11 +207,10 @@ sudo apt-get update</pre></div>
     Casey Marshall
   </p>
   
-<p class="link"><a href="https://hockeypuck.github.io/" target="_blank">https://hockeypuck.github.io/</a></p>
+<p class="link"><a href="https://hockeypuck.io/" target="_blank">https://hockeypuck.io/</a></p>
           </div>
         
       </div>
     </div>
-    <script src='/play.js'></script>
   </body>
 </html>
