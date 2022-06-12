@@ -36,15 +36,15 @@
   </p>
   <h1 id="TOC_3.">3. Install Hockeypuck</h1>
   <div class="code"><pre>git clone https://github.com/hockeypuck/hockeypuck.git
-cd hockeypuck
+cd hockeypuck/contrib/docker-compose/devel
 docker-compose build</pre></div>
   <h1 id="TOC_4.">4. Configure Hockeypuck</h1>
   <p>
-  Create and edit the <a href="configuration.html" target="_self">configuration</a> file in <code>./etc/hockeypuck.conf</code>. Use <code>./contrib/docker-compose/devel/hockeypuck/etc/hockeypuck.conf</code> as a start.
+  Edit the <a href="configuration.html" target="_self">configuration</a> file in <code>./etc/hockeypuck.conf</code> as necessary.
   </p>
   <h1 id="TOC_5.">5. Populate and start the service</h1>
   <p>
-  Create <code>./keydump/</code> directory and populate it with a keydump, e.g. from a location listed in the <a href="https://github.com/SKS-Keyserver/sks-keyserver/wiki/KeydumpSources">KeydumpSources</a>.
+  Populate the <code>./keydump/</code> directory with a keydump, e.g. from a location listed in the <a href="https://github.com/SKS-Keyserver/sks-keyserver/wiki/KeydumpSources">KeydumpSources</a>.
   </p>
   <p>Run the docker images:</p>
   <div class="code"><pre>docker-compose up -d</pre></div>
