@@ -21,9 +21,9 @@
     <li><a href="#TOC_2.">Prerequisites</a></li>
   <ul>
     <li><a href="#TOC_2.1.">Go</a></li>
-    <li><a href="#TOC_2.2.">DVCS Clients</a></li>
+    <li><a href="#TOC_2.2.">Git</a></li>
   </ul>
-    <li><a href="#TOC_3.">Fetch sources with the packaging scripts</a></li>
+    <li><a href="#TOC_3.">Fetch sources</a></li>
     <li><a href="#TOC_4.">Build hockeypuck executables</a></li>
     <li><a href="#TOC_5.">Install</a></li>
     <li><a href="#TOC_6.">Next steps</a></li>
@@ -33,35 +33,27 @@
   <h1 id="TOC_2.">2. Prerequisites</h1>
   <h2 id="TOC_2.1.">2.1. Go</h2>
   <p>
-    Install Go 1.2 or newer from <a href="http://golang.org/doc/install" target="_blank">golang.org</a>.
+    Install Go 1.20 or newer from <a href="http://golang.org/doc/install" target="_blank">golang.org</a>.
   </p>
-  <h2 id="TOC_2.2.">2.2. DVCS Clients</h2>
+  <h2 id="TOC_2.2.">2.2. Git</h2>
   <p>
-    Go will need these DVCS clients installed in order to fetch all of Hockeypuck&#39;s
-    package dependencies:
+    Go will need a Git client installed in order to fetch all of Hockeypuck&#39;s
+    package dependencies.
   </p>
-  <ul>
-    <li>Bazaar</li>
-    <li>Git</li>
-    <li>Mercurial</li>
-  </ul>
   <p>
     On Ubuntu:
   </p>
-  <div class="code"><pre>sudo apt-get install bzr git mercurial</pre></div>
-  <h1 id="TOC_3.">3. Fetch sources with the packaging scripts</h1>
-  <div class="code"><pre>git clone https://github.com/hockeypuck/packaging
-cd packaging
-./prepare.bash</pre></div>
+  <div class="code"><pre>sudo apt-get install git</pre></div>
+  <h1 id="TOC_3.">3. Fetch sources</h1>
+  <div class="code"><pre>git clone https://github.com/hockeypuck/hockeypuck</pre></div>
   <h1 id="TOC_4.">4. Build hockeypuck executables</h1>
-  <div class="code"><pre>export GOPATH=$(pwd)
-go install github.com/hockeypuck/server/cmd/hockeypuck
-go install github.com/hockeypuck/server/cmd/hockeypuck-load
-go install github.com/hockeypuck/server/cmd/hockeypuck-pbuild</pre></div>
+  <p>With Go 1.20 installed, simply run:</p>
+  <div class="code"><pre>make build</pre></div>
+  <p>Hockeypuck binaries will be in `bin/`.
+  It will also install configuration examples and static files.</p>
   <h1 id="TOC_5.">5. Install</h1>
   <p>
-    Copy the executables into the desired target location. The files under
-    <code>instroot</code> in the packaging project may also be useful.
+    Optionally run `sudo make install` to install the executables to `/usr/bin/`.
   </p>
   <p>
     Run Hockeypuck with:
