@@ -57,13 +57,15 @@
   <div class="code"><pre>[hockeypuck]
 contact="DEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEF"
 hostname="keys.example.com"
-nodename="node1.keys.example.com"</pre></div>
+nodename="node1.keys.example.com"
+enableVhosts=true</pre></div>
   <p>
     These settings are displayed on the stats page (<code>/pks/lookup?op=stats</code>).
     <ul>
       <li><code>contact</code> should contain the full fingerprint of the keyserver administrator.</li>
       <li><code>hostname</code> should be set to the external hostname of the server (which may differ from the keyserver host, if reverse-proxied).</li>
       <li><code>nodename</code> may be optionally used to identify a particular node in a load-balancing pool.</li>
+      <li><code>enableVHosts</code> instructs Hockeypuck to support HTTP/1.1 virtual hosts.</li>
     </ul>
   </p>
 
