@@ -57,8 +57,7 @@
   <div class="code"><pre>[hockeypuck]
 contact="DEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEF"
 hostname="keys.example.com"
-nodename="node1.keys.example.com"
-    </pre></div>
+nodename="node1.keys.example.com"</pre></div>
   <p>
     These settings are displayed on the stats page (<code>/pks/lookup?op=stats</code>).
     <ul>
@@ -98,9 +97,9 @@ webroot=&#34;/path/to/www/files&#34;</pre></div>
     Specify these templates with:
   </p>
   <div class="code"><pre>[hockeypuck]
-indexTemplate=&#34;/path/to/template&#34;
-vindexTemplate=&#34;/path/to/template&#34;
-statsTemplate=&#34;/path/to/template&#34;</pre></div>
+indexTemplate="/path/to/template"
+vindexTemplate="/path/to/template"
+statsTemplate="/path/to/template"</pre></div>
   <p>
     The path must be to a file containing a valid Go
     <a href="https://golang.org/pkg/html/template/" target="_blank">html/template</a>.
@@ -219,11 +218,12 @@ dsn="database=hkp host=/var/run/postgresql port=5432 sslmode=disable"</pre></div
   </p>
   <div class="code"><pre>[hockeypuck.openpgp.headers]
 comment="Hockeypuck"
-version="2.2.0"
-</pre></div>
+version="2.2.0"</pre></div>
   <p>
-    <ul><code>comment</code> is the contents of the "Comment" field.</ul>
-    <ul><code>version</code> is the contents of the "Version" field.</ul>
+    <ul>
+      <li><code>comment</code> is the contents of the "Comment" field.</li>
+      <li><code>version</code> is the contents of the "Version" field.</li>
+    </ul>
   </p>
 
 <!-- BEWARE that PKS support is currently not tested, and the code shows evidence of abandonware
@@ -319,7 +319,9 @@ path="/path/to/prefix/tree"</pre></div>
     The prefix tree is used to keep track of which keys the peer has, for synchronization purposes.
   </p>
   <p>
-    <code>path</code> should be a writeable directory that already exists.
+    <ul>
+      <li><code>path</code> should be a writeable directory that already exists.</li>
+    </ul>
   </p>
 
   <h2 id="TOC_1.5.">1.5. Metrics</h3>
@@ -330,7 +332,6 @@ path="/path/to/prefix/tree"</pre></div>
 metricsAddr=":9626"
 metricsPath="/metrics"</pre></div>
   <p>
-    The .
     <ul>
       <li><code>metricsAddr</code> is the port that the Hockeypuck metrics service will listen on, in <code>host:port</code> format. (default ":9626")</li>
       <li><code>metricsPath</code> is the endpoint path at which the metrics will be served. (default "/metrics")</li>
@@ -347,16 +348,14 @@ metricsPath="/metrics"</pre></div>
   <div class="code"><pre>
 [hockeypuck.openpgp.db]
 driver="postgres-jsonb"
-dsn="database=hkp host=postgres user={{ .POSTGRES_USER }} password={{ .POSTGRES_PASSWORD }} port=5432 sslmode=disable"
-  </div></pre>
+dsn="database=hkp host=postgres user={{ .POSTGRES_USER }} password={{ .POSTGRES_PASSWORD }} port=5432 sslmode=disable"</div></pre>
   </p>
   <p>
   You can also use the <code>osenv</code> custom function to read environment variables by prefix:
   <div class="code"><pre>
 {{ range $key, $value := osenv "HKP_" }}
 {{ $key }}={{ $value }}
-{{ end }}
-  </div></pre>
+{{ end }}</div></pre>
   </p>
   <h2>Authors</h2>
   <div class="author"><p>
