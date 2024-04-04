@@ -71,7 +71,7 @@ enableVhosts=true</pre></div>
 
   <h3 id="TOC_1.1.1.">1.1.1. Logging</h3>
   <div class="code"><pre>[hockeypuck]
-logfile=&#34;/path/to/logfile&#34;
+logfile="/path/to/logfile"
 loglevel=&lt;one of: DEBUG,INFO,WARNING,ERROR,FATAL,PANIC&gt;</pre></div>
   <p>
     If not configured, hockeypuck will log INFO level messages and higher severity to standard error.
@@ -83,7 +83,7 @@ loglevel=&lt;one of: DEBUG,INFO,WARNING,ERROR,FATAL,PANIC&gt;</pre></div>
     the path names do not conflict with HKP routed requests (like <code>/pks/lookup</code>).
   </p>
   <div class="code"><pre>[hockeypuck]
-webroot=&#34;/path/to/www/files&#34;</pre></div>
+webroot="/path/to/www/files"</pre></div>
   <p>
     <code>index.html</code> will be served by default if the path resolves to a directory and the file exists.
   </p>
@@ -143,7 +143,7 @@ logRequestDetails=false
 </pre></div>
   <p>
     <ul>
-      <li><code>bind</code> identifies the HKP port (and optionally host/ip) that Hockeypuck should listen on, in <code>host:port</code> format</li>
+      <li><code>bind</code> identifies the HKP port that Hockeypuck should listen on, in <code>host:port</code> format</li>
       <li><code>advertisedBind</code> is the <code>bind</code> value reported on the stats page. It defaults to the value of <code>bind</code></li>
       <li><code>logRequestDetails</code> indicates whether Hockeypuck should log HKP requests; a public keyserver may not wish to log these for privacy reasons</li>
     </ul>
@@ -156,7 +156,7 @@ keywordSearchDisabled=false
 </pre></div>
   <p>
     <ul>
-      <li><code>selfSignedOnly</code> removes all packets that are not signed by the primary key. (default false)</li>
+      <li><code>selfSignedOnly</code> serves only self-signatures, and drops third-party signatures. (default false)</li>
       <li><code>keywordSearchDisabled</code> only allows fingerprint and key ID queries - email addresses or full text searches are disabled. (default false)</li>
     </ul>
   </p>
@@ -173,7 +173,7 @@ key="/path/to/key"
 </pre></div>
   <p>
     <ul>
-      <li><code>bind</code> identifies the HKPS port (and optionally host/ip) that Hockeypuck should listen on, in <code>host:port</code> format</li>
+      <li><code>bind</code> identifies the HKPS port that Hockeypuck should listen on, in <code>host:port</code> format</li>
       <li><code>logRequestDetails</code> has the same meaning as for HKP above.</li>
       <li><code>cert</code> and <code>key</code> identify the certificate and key files for use by TLS.</li>
     </ul>
@@ -282,15 +282,16 @@ logname="conflux.recon"
     <ul>
       <li><code>httpAddr</code> determines the recovery address that will be advertised in the recon protocol. (default <code>":11371"</code>)</li>
       <li><code>reconAddr</code> determines the listen address for the recon server. (default <code>:11370</code>)</li>
-      <li><code>allowCIDRs</code> is a list of network addresses in CIDR format that are allowed to initiate recon with this server, despite not being listed as partners.
+      <li><code>allowCIDRs</code> is a list of network addresses in CIDR format that are allowed to initiate recon with this server, despite not being listed as partners.<br/>
         This is especially useful when inbound connections to Hockeypuck are subject to NAT.
         If not specified, inbound connections are only allowed from partner IP addresses.
         Note that outgoing recon to such addresses will not take place, but recovery will. (default empty)</li>
-      <li><code>filters</code> are labels that indicate the type of processing that has been applied to key material.
-        Hockeypuck exposes a version-dependent list of filters to ensure that it only syncs with compatible partners.
-        <code>filters</code> is a list of additional labels that is appended to the internal list, which cannot be overridden.
-        This can be used to prevent sync between different server pools, e.g. a pre-production and production pool. (default empty)</li>
-      <li><code>seenCacheSize</code> is the size of the LRU cache used to minimise repeated requests for the same (possibly unprocessable) entries on remote partners. (default 256)</li>
+      <li><code>filters</code> are labels that indicate how the dataset has been processed.<br/>
+        Hockeypuck exposes a (hard-coded, version-dependent) list of filters to ensure that it only syncs with compatible partners.
+        <code>filters</code> is a list of additional labels that is appended to the hard-coded list.
+        They can be used to prevent sync between different server pools, e.g. a pre-production and production pool. (default empty)</li>
+      <li><code>seenCacheSize</code> is the size of the LRU cache used to minimise repeated requests for the same entries on remote partners.<br/>
+        If you have a large blacklist that differs significantly from your sync partners, this may need to be increased. (default 256)</li>
       <li><code>gossipIntervalSecs</code> is the number of seconds to wait between recon attempts. (default 60)</li>
       <li><code>maxOutstandingReconRequests</code> is the number of total recon connections to keep open. (default 100)</li>
       <li><code>logname</code> is the name used when the <code>conflux</code> module emits logs. (default <code>conflux.recon</code>)</li>
@@ -335,15 +336,16 @@ metricsAddr=":9626"
 metricsPath="/metrics"</pre></div>
   <p>
     <ul>
-      <li><code>metricsAddr</code> is the port that the Hockeypuck metrics service will listen on, in <code>host:port</code> format. (default ":9626")</li>
+      <li><code>metricsAddr</code> is the address that the Hockeypuck metrics service will listen on, in <code>host:port</code> format. (default ":9626")</li>
       <li><code>metricsPath</code> is the endpoint path at which the metrics will be served. (default "/metrics")</li>
     </ul>
   </p>
 
   <h1 id="TOC_2.">2. Templating</h1>
   <p>
-  The <code>hockeypuck.conf</code> configuration file supports templating using the Go text/template package with Sprig extensions.
-  The template is rendered before the configuration file is parsed, so the configuration file can contain environment variables.
+    The <code>hockeypuck.conf</code> configuration file supports templating using the Go 
+    <a href="https://golang.org/pkg/text/template/" target="_blank">text/template</a> package with Sprig extensions.
+    The template is rendered before the configuration file is parsed, so the configuration file can contain environment variables.
   </p>
   <p>
   For example, setting the database configuration to use environment variables:
