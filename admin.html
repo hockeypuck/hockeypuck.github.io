@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hockeypuck</title>
+    <link type="text/css" rel="stylesheet" href="static/article.css">
+    <meta charset='utf-8'>
+  </head>
+  <body>
+    <div id="topbar" class="wide">
+      <div class="container">
+        <div id="heading">Hockeypuck
+          OpenPGP Public Keyserver
+        </div>
+      </div>
+    </div>
+    <div id="page" class="wide">
+      <div class="container">
+          <div id="toc">
+  <ul>
+    <li><a href="#TOC_1.">Remote Administration</a></li>
+  <ul>
+    <li><a href="#TOC_1.1.">Key Deletion and Replacement</a></li>
+  </ul>
+  </ul>
+          </div>
+  <h1 id="TOC_1.">1. Server Administration</h1>
+  <p>
+    An administrator may perform limited admin tasks by submitting signed requests over HTTP.
+    All such tasks require an admin key or keys to be set <a href="configuration.html">in the configuration file</a>:
+    <div class="code"><pre>[hockeypuck]
+adminKeys=[
+    "DECAFBADDECAFBADDECAFBADDECAFBADDECAFBAD",
+]
+    </pre></div>        
+  </p>
+  <p>
+    A plaintext request (below called <code>request.txt</code>) follows a standard format:
+    <ul>
+        <li>The first line is the path of the operation, e.g. <code>/pks/delete</code> or <code>/pks/replace</code>.
+            This helps prevent signature-reuse attacks, and <em>must</em> match exactly.</li>
+        <li>The remaining lines of the request are the message data.</li>
+    </ul>
+    The plaintext request is signed by one of the admin keys using e.g. <a href="https://github.com/ProtonMail/gosop/"><code>gosop</code></a>:
+  </p>
+  <div class="code"><pre>gosop sign $PRIVATE_KEY < request.txt > sig.asc
+  </pre></div>
+  <p>
+    Where <code>$PRIVATE_KEY</code> is a file containing the private admin key.
+    It can then be submitted via e.g. <code>curl</code>:
+  </p>
+  <div class="code"><pre>curl -XPUT https://keys.example.com/$PATH --data-urlencode keytext@request.txt --data-urlencode keysig@sig.asc
+  </pre></div>
+  <p>
+    Where <code>$PATH</code> is the path of the operation.
+  </p>
+  <h2 id="TOC_1.1.">1.1. Key Deletion and Replacement</h2>
+  <p>
+    BEWARE that deletion and replacement actions do not prevent the old key data from being resubmitted or resynced from the server's peers.
+    To prevent changes being overwritten, the key's fingerprint should be added to the server's blacklist first.
+  </p>
+  <p>
+    <ul>
+        <li>To delete a key, the path is <code>/pks/delete</code></li>
+        <li>To replace a key, the path is <code>/pks/replace</code></li>
+    </ul>
+    In both cases, the message data is a valid ASCII-armored copy of the key to be deleted or replaced.
+    In the case of replacement, this copy of the key is the one that will replace the one on disk.
+  </p>
+  <h2>Authors</h2>
+  <div class="author">
+  <p>
+    Andrew Gallagher
+  </p>
+<p class="link"><a href="https://hockeypuck.io" target="_blank">https://hockeypuck.io</a></p>
+          </div>
+      </div>
+    </div>
+  </body>
+</html>
