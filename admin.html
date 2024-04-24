@@ -42,13 +42,13 @@ adminKeys=[
     </ul>
     The plaintext request is signed by one of the admin keys using e.g. <a href="https://github.com/ProtonMail/gosop/"><code>gosop</code></a>:
   </p>
-  <div class="code"><pre>gosop sign $PRIVATE_KEY < request.txt > sig.asc
+  <div class="code"><pre>gosop sign $SECRET_KEY < request.txt > sig.asc
   </pre></div>
   <p>
-    Where <code>$PRIVATE_KEY</code> is a file containing the private admin key.
+    Where <code>$SECRET_KEY</code> is a file containing the admin secret key.
     It can then be submitted via e.g. <code>curl</code>:
   </p>
-  <div class="code"><pre>curl -XPUT https://keys.example.com/$PATH --data-urlencode keytext@request.txt --data-urlencode keysig@sig.asc
+  <div class="code"><pre>curl https://keys.example.com/$PATH --data-urlencode keytext@request.txt --data-urlencode keysig@sig.asc
   </pre></div>
   <p>
     Where <code>$PATH</code> is the path of the operation.
