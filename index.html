@@ -20,12 +20,12 @@
     <li><a href="#TOC_1.">About</a></li>
     <li><a href="#TOC_2.">Latest Release</a></li>
     <li><a href="#TOC_3.">Features</a></li>
-  <ul>
-    <li><a href="#TOC_3.1.">OpenPGP Standards</a></li>
-    <li><a href="#TOC_3.2.">SKS Reconciliation Protocol</a></li>
-    <li><a href="#TOC_3.3.">Modular storage backend</a></li>
-    <li><a href="#TOC_3.4.">Flexible rendering</a></li>
-  </ul>
+    <ul>
+      <li><a href="#TOC_3.1.">OpenPGP Standards</a></li>
+      <li><a href="#TOC_3.2.">SKS Reconciliation Protocol</a></li>
+      <li><a href="#TOC_3.3.">Modular storage backend</a></li>
+      <li><a href="#TOC_3.4.">Flexible rendering</a></li>
+    </ul>
     <li><a href="#TOC_4.">Install</a></li>
     <li><a href="#TOC_5.">Next Steps</a></li>
     <li><a href="#TOC_6.">License</a></li>
@@ -39,7 +39,7 @@
   <p>
     The latest <a href="https://github.com/hockeypuck/hockeypuck/releases" target="_blank">release</a> of
     Hockeypuck is
-    <a href="https://github.com/hockeypuck/hockeypuck/releases/tag/2.1.0" target="_blank">2.1.0</a>.
+    <a href="https://github.com/hockeypuck/hockeypuck/releases/tag/2.2.0" target="_blank">2.2.0</a>.
   </p>
   <p>
     Hockeypuck 2.x is a significant redesign of the original <a href="1x.html" target="_self">Hockeypuck 1.x</a>,
@@ -48,15 +48,14 @@
   <h1 id="TOC_3.">3. Features</h1>
   <h2 id="TOC_3.1.">3.1. OpenPGP Standards</h2>
   <p>
-    Hockeypuck implements the
-    <a href="https://datatracker.ietf.org/doc/html/draft-shaw-openpgp-hkp-00" target="_blank">HKP draft protocol specification</a>
-    as well as several extensions to the protocol supported by <a href="http://github.com/SKS-Keyserver/" target="_blank">SKS</a>.
+    Hockeypuck targets the
+    <a href="https://datatracker.ietf.org/doc/html/draft-gallagher-openpgp-hkp" target="_blank">HKP draft protocol specification</a>.
+    As this draft is a work in progress, Hockeypuck features may not exactly correspond to the current draft specification.
   </p>
   <p>
     Public key material conforming to <a href="https://tools.ietf.org/html/rfc4880" target="_blank">RFC 4880</a> is supported by the keyserver, as
-    are <a href="https://tools.ietf.org/html/rfc6637" target="_blank">RFC 6637</a> ECC keys. As-of-yet unsupported key
-    material, such as recent Ed25519 signing keys, may be distributed by
-    Hockeypuck, however Hockeypuck is not able to validate them yet.
+    are <a href="https://tools.ietf.org/html/rfc6637" target="_blank">RFC 6637</a> ECC keys.
+    As-of-yet non-standard key material, such as v4 Ed25519 keys, may also be distributed by Hockeypuck.
   </p>
   <h2 id="TOC_3.2.">3.2. SKS Reconciliation Protocol</h2>
   <p>
@@ -66,7 +65,7 @@
   </p>
   <h2 id="TOC_3.3.">3.3. Modular storage backend</h2>
   <p>
-    Hockeypuck uses PostgreSQL ≥ 9.4 for storing indexed key
+    Hockeypuck uses PostgreSQL ≥ 9.4 (tested up to v16) for storing indexed key
     material. The architecture supports additional storage backends, which must
     implement a simple set of Go interfaces.
   </p>
@@ -84,22 +83,23 @@
   <ul>
     <li><a href="install-docker.html" target="_self">Install with Docker (RECOMMENDED)</a></li>
     <li><a href="install-source.html" target="_self">Build and Install from source</a></li>
-    <li><a href="install-tarball.html" target="_self">Install from tarball release</a></li>
-    <li><a href="install-ubuntu.html" target="_self">Install from Ubuntu archives</a></li>
-    <li><a href="juju.html" target="_self">Deploy with Juju</a></li>
+    <li><a href="install-tarball.html" target="_self">Install from tarball release (STALE)</a></li>
+    <li><a href="install-ubuntu.html" target="_self">Install from Ubuntu archives (STALE)</a></li>
+    <li><a href="juju.html" target="_self">Deploy with Juju (STALE)</a></li>
   </ul>
   <h1 id="TOC_5.">5. Next Steps</h1>
   <ul>
     <li><a href="configuration.html" target="_self">Configuring</a> a Hockeypuck server.</li>
+    <li><a href="admin.html" target="_self">Remotely administering</a> a Hockeypuck server.</li>
     <li><a href="populating.html" target="_self">Populating</a> Hockeypuck with keyfiles.</li>
     <li><a href="dumping.html" target="_self">Dumping</a> Hockeypuck database contents to keyfiles.</li>
-    <li><a href="contributing.html" target="_self">Contributing</a> to Hockeypuck.</li>
+    <li><a href="contributing.html" target="_self">Contributing</a> to Hockeypuck. (STALE)</li>
     <li><a href="community.html" target="_self">Community</a> support for Hockeypuck, for issues and new feature requests.</li>
   </ul>
   <h1 id="TOC_6.">6. License</h1>
   <p>
-    Copyright 2012-2015 Casey Marshall. Hockeypuck is distributed under the
-    <a href="https://www.gnu.org/licenses/agpl-3.0.html" target="_blank">Affero GNU Public License, version 3</a>.
+    Copyright 2012-2024 Casey Marshall and the <a href="https://github.com/hockeypuck/hockeypuck/blob/master/CONTRIBUTORS">Hockeypuck contributors</a>.
+    Hockeypuck is distributed under the <a href="https://www.gnu.org/licenses/agpl-3.0.html" target="_blank">Affero GNU Public License, version 3</a>.
   </p>
   <p>
     In general, any use of Hockeypuck privately within an organization (including a
@@ -111,7 +111,8 @@
   </p>
   <ul>
     <li>Distribute a <i>closed-source</i> application binary that builds with Hockeypuck AGPL packages. For example, a folder-syncing app that uses Conflux.</li>
-    <li>Publishing a closed-source service that uses Hockeypuck in its deployment to other parties. The AGPL includes web API access as &#34;distribution&#34;. For example, a PGP-based web service like keybase.io could be built with Hockeypuck, but it would be required to be open-source under the redistribution terms of the AGPL.</li>
+    <li>Publishing a closed-source service that uses Hockeypuck in its deployment to other parties. The AGPL includes web API access as &#34;distribution&#34;. 
+      For example, a PGP-based web service like keybase.io could be built with Hockeypuck, but it would be required to be open-source under the redistribution terms of the AGPL.</li>
   </ul>
   <p>
     <a href="mailto:sales@cmarstech.com" target="_blank">Contact</a> me for licensing alternatives (or if you&#39;re still not quite sure).
