@@ -35,9 +35,11 @@
   Any host being able to run a somewhat recent version of <code>git</code> and <code>docker-compose</code> is suitable.
   </p>
   <h1 id="TOC_3.">3. Install Hockeypuck</h1>
-  <div class="code"><pre>git clone https://github.com/hockeypuck/hockeypuck.git
+  <div class="code"><pre>git clone --config core.autocrlf=false https://github.com/hockeypuck/hockeypuck
 cd hockeypuck/contrib/docker-compose/devel
 docker-compose build</pre></div>
+  <p>Beware that if you are building a docker image under Windows, you MUST disable <code>autocrlf</code> as above,
+    <a href="https://stackoverflow.com/questions/53165471/building-docker-images-on-windows-entrypoint-script-no-such-file-or-directory">otherwise the docker container will fail to start</a>.</p>
   <h1 id="TOC_4.">4. Configure Hockeypuck</h1>
   <p>
   Edit the <a href="configuration.html" target="_self">configuration</a> file in <code>./etc/hockeypuck.conf</code> as necessary.
