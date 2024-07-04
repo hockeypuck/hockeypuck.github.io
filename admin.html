@@ -40,9 +40,9 @@ adminKeys=[
             This helps prevent signature-reuse attacks, and <em>must</em> match exactly.</li>
         <li>The remaining lines of the request are the message data.</li>
     </ul>
-    The plaintext request is signed by one of the admin keys using e.g. <a href="https://github.com/ProtonMail/gosop/"><code>gosop</code></a>:
+    The plaintext request is signed (as text, not binary!) by one of the admin keys using e.g. <a href="https://github.com/ProtonMail/gosop/"><code>gosop</code></a>:
   </p>
-  <div class="code"><pre>gosop sign $SECRET_KEY < request.txt > sig.asc
+  <div class="code"><pre>gosop sign --as text $SECRET_KEY < request.txt > sig.asc
   </pre></div>
   <p>
     Where <code>$SECRET_KEY</code> is a file containing the admin secret key.
