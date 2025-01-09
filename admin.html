@@ -31,7 +31,8 @@
 adminKeys=[
     "DECAFBADDECAFBADDECAFBADDECAFBADDECAFBAD",
 ]
-    </pre></div>        
+    </pre></div>
+    The configured admin key(s) must be valid and present in the local hockeypuck database.
   </p>
   <p>
     A plaintext request (below called <code>request.txt</code>) follows a standard format:
@@ -46,6 +47,13 @@ adminKeys=[
   </pre></div>
   <p>
     Where <code>$SECRET_KEY</code> is a file containing the admin secret key.
+  </p>
+  <p>
+    Or using gnupg:
+  </p>
+  <div class="code"><pre>gpg --armor --textmode --local-user $ADMIN_FINGERPRINT --output sig.asc --detach-sign request.txt
+  </pre></div>
+  <p>
     It can then be submitted via e.g. <code>curl</code>:
   </p>
   <div class="code"><pre>curl https://keys.example.com/$PATH --data-urlencode keytext@request.txt --data-urlencode keysig@sig.asc
