@@ -364,18 +364,19 @@ dsn="database=hkp host=postgres user={{ .POSTGRES_USER }} password={{ .POSTGRES_
     <a href="https://masterminds.github.io/sprig/" target="_blank">Sprig extensions</a> are powerful, and can be used to construct quite complex configuration files.
     For example, given an environment variable:
     <div class="code"><pre>
-    GOSSIP_PEERS='{"ks1_example_com": {"httpAddr": "ks1.example.com:11371", "reconAddr": "ks1.example.com:11370"},'\
-    '"ks2_example_com": {"httpAddr": "ks2.example.com:11371", "reconAddr": "ks2.example.com:11370"}}'</div></pre>
-
+GOSSIP_PEERS='{"ks1_example_com": {"httpAddr": "ks1.example.com:11371", "reconAddr": "ks1.example.com:11370"},'\
+'"ks2_example_com": {"httpAddr": "ks2.example.com:11371", "reconAddr": "ks2.example.com:11370"}}'</div></pre>
+  </p>
+  <p>
     We can populate the list of recon partners by parsing it as JSON and iterating over the resulting structure:
     <div class="code"><pre>
-      {{- if .GOSSIP_PEERS }}
-      {{- range $name, $peer := fromJson .GOSSIP_PEERS }}
-      [hockeypuck.conflux.recon.partner.{{ $name }}]
-      httpAddr="{{ $peer.httpAddr }}"
-      reconAddr="{{ $peer.reconAddr }}"
-      {{- end }}
-      {{- end }}</div></pre>
+{{- if .GOSSIP_PEERS }}
+{{- range $name, $peer := fromJson .GOSSIP_PEERS }}
+[hockeypuck.conflux.recon.partner.{{ $name }}]
+httpAddr="{{ $peer.httpAddr }}"
+reconAddr="{{ $peer.reconAddr }}"
+{{- end }}
+{{- end }}</div></pre>
     </p>
 
   <h2>Authors</h2>
