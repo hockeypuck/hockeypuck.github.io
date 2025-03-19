@@ -53,7 +53,7 @@ docker-compose build</pre></div>
   <p>This will first import the keydump; expect this to take a day at least. To follow the progress or see error messages, use:</p>
   <div class="code"><pre>docker-compose logs --follow</pre></div>
   <h1 id="TOC_6.">6. Make available as HTTPS</h1>
-  <p>The easiest way to make this or any other service available under HTTPS is to use [https-portal](https://github.com/SteveLTN/https-portal). Clone it in a separate directory, and edit <code>docker-compose.yml</code> to include:</p>
+  <p>The easiest way to make this or any other service available under HTTPS is to use <a href="https://github.com/SteveLTN/https-portal">https-portal</a>. Clone it in a separate directory, and edit <code>docker-compose.yml</code> to include:</p>
   <div class="code"><pre>environment:
   DOMAINS: |
     keyserver.example.com -> http://dockerhost:11371,</pre></div>
