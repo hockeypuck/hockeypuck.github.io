@@ -199,7 +199,8 @@ nworkers=8
 
   <h3 id="TOC_1.3.1.">1.3.1. Storage</h3>
   <p>
-    PostgreSQL &gt;= 9.5 is required for use with Hockeypuck.
+    Hockeypuck is supported on any version of PostgreSQL &ge; 13.
+    Older versions of PostgreSQL (&ge; 9.6) <em>may</em> work, however bugs that only affect older PostgreSQL versions will not be fixed.
     Some fields are broken out into separate columns for indexing.
     For details, refer to the PostgreSQL storage backend, <a href="https://github.com/hockeypuck/hockeypuck/tree/master/src/hockeypuck/pghkp/storage.go" target="_blank">pghkp/storage.go</a>.
     Hockeypuck has been tested with versions of PostgreSQL up to and including 16.
@@ -220,7 +221,7 @@ dsn="database=hkp host=/var/run/postgresql port=5432 sslmode=disable"</pre></div
   </p>
   <div class="code"><pre>[hockeypuck.openpgp.headers]
 comment="Hockeypuck"
-version="2.2.0"</pre></div>
+version="2.3.0"</pre></div>
   <p>
     <ul>
       <li><code>comment</code> is the contents of the "Comment" field. (default empty)</li>
@@ -228,7 +229,6 @@ version="2.2.0"</pre></div>
     </ul>
   </p>
 
-<!-- BEWARE that PKS support is currently not tested, and the code shows evidence of abandonware
   <h3 id="TOC_1.3.3.">1.3.3. PKS</h3>
   <p>
     If this section is populated, Hockeypuck will send PKS updates to other PKS-compatible servers.
@@ -236,7 +236,8 @@ version="2.2.0"</pre></div>
   <div class="code"><pre>[hockeypuck.openpgp.pks]
 from="pks-updates@keys.example.com"
 to=[
-  "pks-updates@keys.contoso.com"
+  "mailto:pks-updates@keys.contoso.com",
+  "hkp://keyserver.example"
 ]
 [hockeypuck.openpgp.pks.smtp]
 host="localhost:25"
@@ -246,17 +247,16 @@ pass="secret"
 </pre></div>
   <p>
     <ul><code>from</code> is the contents of the <code>From:</code> SMTP header.</ul>
-    <ul><code>to</code> is the list of addresses to send PKS updates to.</ul>
+    <ul><code>to</code> is the list of URLs to send PKS updates to. These can be <code>mailto:</code> URLs, <code>hkp[s]:</code> URLs, or <code>vks:</code> URLs.</ul>
   </p>
   <p>
     <ul>
       <li><code>host</code> is the SMTP host to connect to, in <code>host:port</code> format. (default <code>"localhost:25"</code>)</li>
-      <li><code>id</code> </li>
+      <li><code>id</code> overrides the SMTP identity passed to <a href="https://pkg.go.dev/net/smtp#PlainAuth">smtp.PlainAuth</a>, and should normally be left blank. </li>
       <li><code>user</code> is the username to be used for SMTP auth. (default empty)</li>
       <li><code>pass</code> is the password to be used for SMTP auth. (default empty)</li>
     </ul>
   </p>
--->
 
   <h2 id="TOC_1.4.">1.4. Recon</h2>
   <p>
@@ -313,6 +313,11 @@ reconAddr="juju-azure-dev-y9157oo521.cloudapp.net:11370"
   <p>
     Each partner section must include a <code>httpAddr</code> and a <code>reconAddr</code> entry, in <code>host:port</code> format.
     These are <i>usually</i> the same host, but they might differ, especially if the HKP service is reverse-proxied.
+  </p>
+  <p>
+    If <code>pksFailover</code> is set to <code>true</code>, and the partner in question fails to recon, it will be temporarily added to the <a href="#TOC_1.3.3.">list of PKS servers</a>.
+    This can be used to ensure continuity of updates, particularly during upgrades.
+    Note that since PKS is a one-way sync protocol, for full sync <code>pksFailover</code> will need to be configured on both partners.
   </p>
 
   <h3 id="TOC_1.4.2.">1.4.2. Prefix tree</h3>
