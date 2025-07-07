@@ -8,8 +8,7 @@
   <body>
     <div id="topbar" class="wide">
       <div class="container">
-        <div id="heading">Hockeypuck
-          OpenPGP Public Keyserver
+        <div id="heading">Hockeypuck OpenPGP Keyserver
         </div>
       </div>
     </div>
@@ -21,18 +20,12 @@
   <ul>
     <li><a href="#TOC_1.1.">Where to contribute</a></li>
   <ul>
-    <li><a href="#TOC_1.1.1.">Hockeypuck Packages</a></li>
-    <li><a href="#TOC_1.1.2.">Hockeypuck Server</a></li>
-    <li><a href="#TOC_1.1.3.">Hockeypuck Front-End</a></li>
-    <li><a href="#TOC_1.1.4.">Hockeypuck Packaging</a></li>
-    <li><a href="#TOC_1.1.5.">Hockeypuck documentation</a></li>
-    <li><a href="#TOC_1.1.6.">Hockeypuck testing</a></li>
+    <li><a href="#TOC_1.1.1.">Hockeypuck Server</a></li>
+    <li><a href="#TOC_1.1.2.">Hockeypuck Documentation</a></li>
   </ul>
     <li><a href="#TOC_1.2.">Tools</a></li>
   <ul>
-    <li><a href="#TOC_1.2.1.">gopkg</a></li>
-    <li><a href="#TOC_1.2.2.">godeps</a></li>
-    <li><a href="#TOC_1.2.3.">Travis CI</a></li>
+    <li><a href="#TOC_1.2.1.">Github CI</a></li>
   </ul>
     <li><a href="#TOC_1.3.">Pull request guidelines</a></li>
   </ul>
@@ -41,80 +34,29 @@
   <h1 id="TOC_1.">1. Contributing</h1>
   <h2 id="TOC_1.1.">1.1. Where to contribute</h2>
   <p>
-    Hockeypuck has been split into several Go package projects.
-  </p>
-  <p>
     In general, all Hockeypuck projects are maintained under the
     <a href="https://github.com/hockeypuck" target="_blank">hockeypuck</a> organization, in the following
     Github projects:
   </p>
-  <h3 id="TOC_1.1.1.">1.1.1. Hockeypuck Packages</h3>
+  <h3 id="TOC_1.1.1.">1.1.1. Hockeypuck Server</h3>
   <p>
-    Hockeypuck is composed of several small Go packages, each of which attempt to do one thing well.
+    The main Hockeypuck repo at <a href="https://github.com/hockeypuck/hockeypuck" target="_blank">github.com/hockeypuck/hockeypuck</a> contains the source code for the Hockeypuck server,
+    along with its helper utilities.
   </p>
-  <ul>
-    <li><a href="https://gopkg.in/hockeypuck/conflux.v2" target="_blank">conflux</a> Reconciliation protocol used for peering.</li>
-    <li><a href="https://gopkg.in/hockeypuck/hkp.v1" target="_blank">hkp</a> HKP protocol handler.</li>
-    <li><a href="https://gopkg.in/hockeypuck/openpgp.v1" target="_blank">openpgp</a> OpenPGP public key data model &amp; processing. </li>
-    <li><a href="https://gopkg.in/hockeypuck/pghkp.v1" target="_blank">pghkp</a> PostgreSQL JSONB storage driver.</li>
-  </ul>
-  <h3 id="TOC_1.1.2.">1.1.2. Hockeypuck Server</h3>
+  <h4 id="TOC_1.1.1.1.">1.1.1.1. Hockeypuck Front-End</h3>
   <p>
-    The Hockeypuck server at <a href="https://github.com/hockeypuck/server" target="_blank">github.com/hockeypuck/server</a> integrates the
-    above packages with a server configuration model, logging, server and
-    maintenance utility binaries.
+    A fork of Matt Rude's <a href="https://github.com/mattrude/pgpkeyserver-lite" target="_blank">pgpkeyserver-lite</a> front end is included in the Hockeypuck release for convenience.
   </p>
-  <h3 id="TOC_1.1.3.">1.1.3. Hockeypuck Front-End</h3>
+  <h3 id="TOC_1.1.2.">1.1.2. Hockeypuck Documentation</h3>
   <p>
-    <a href="https://github.com/hockeypuck/webroot" target="_blank">github.com/hockeypuck/webroot</a> is a fork of Matt Rude&#39;s
-    <a href="https://github.com/mattrude/pgpkeyserver-lite" target="_blank">pgpkeyserver-lite</a> front end.
-    It&#39;s included in the Hockeypuck release for convenience.
-  </p>
-  <h3 id="TOC_1.1.4.">1.1.4. Hockeypuck Packaging</h3>
-  <p>
-    <a href="https://github.com/hockeypuck/packaging" target="_blank">github.com/hockeypuck/packaging</a> is a collection of release management
-    scripts. These scripts fetch the above Hockeypuck source packages and all their
-    dependencies at known compatible and working versions. Debian packaging as well
-    as cross-compiled tarballs are supported for release distribution.
-  </p>
-  <h3 id="TOC_1.1.5.">1.1.5. Hockeypuck documentation</h3>
-  <p>
-    <a href="https://github.com/hockeypuck/hockeypuck" target="_blank">github.com/hockeypuck/hockeypuck</a> used to be the entire
-    Hockeypuck source tree, but since splitting up into separate package
-    projects, it is used primarily for project documentation.
-  </p>
-  <h3 id="TOC_1.1.6.">1.1.6. Hockeypuck testing</h3>
-  <p>
-    <a href="https://github.com/hockeypuck/testing" target="_blank">github.com/hockeypuck/testing</a> contains testdata used by some of the
-    other projects, such as OpenPGP key material examples used in
-    <a href="https://gopkg.in/hockeypuck/openpgp" target="_blank">openpgp</a> test cases. It also contains
-    <a href="http://docs.ansible.com/" target="_blank">Ansible</a> playbooks used to coordinate integration
-    tests. These might be a useful starting point for an Ansible-based deployment
-    of Hockeypuck.
+    This website is maintained via github at <a href="https://github.com/hockeypuck/hockeypuck.github.io" target="_blank">github.com/hockeypuck/hockeypuck.github.io</a>.
+    It is the primary source of documentation for the Hockeypuck project.
   </p>
   <h2 id="TOC_1.2.">1.2. Tools</h2>
-  <h3 id="TOC_1.2.1.">1.2.1. gopkg</h3>
+  <h3 id="TOC_1.2.1.">1.2.1. Github CI</h3>
   <p>
-    <a href="https://gopkg.in" target="_blank">gopkg.in</a> is used to version Hockeypuck APIs. This is a distinct concern
-    from dependency revision management. Versioned APIs provide certain guarantees
-    with regard to compatibility.
-  </p>
-  <h3 id="TOC_1.2.2.">1.2.2. godeps</h3>
-  <p>
-    The <a href="https://github.com/hockeypuck/server" target="_blank">server</a> releases use
-    <a href="https://launchpad.net/godeps" target="_blank">godeps</a> for managing
-    <a href="https://github.com/hockeypuck/server/blob/master/dependencies.tsv" target="_blank">package dependencies</a>.
-    I&#39;ve tried several other dependency management solutions for Go
-    packages, and I find godeps to be simple, easy to work with and
-    well-maintained.
-  </p>
-  <h3 id="TOC_1.2.3.">1.2.3. Travis CI</h3>
-  <p>
-    Many of the Hockeypuck projects use <a href="https://travis-ci.org/hockeypuck" target="_blank">Travis CI</a> to build and test the projects on
-    commit. I&#39;ve found Travis to be more useful than not for small, simple projects
-    with short tests. Which is really where you want to be. It&#39;s also nice to test
-    on many versions of Go, which is something I would not bother to do on every
-    commit otherwise.
+    Pull requests are tested using the github CI.
+    CI tasks are configured in `.github/workflows` under the main branch of the hockeypuck project.
   </p>
   <h2 id="TOC_1.3.">1.3. Pull request guidelines</h2>
   <p>
@@ -123,13 +65,13 @@
     <a href="https://groups.google.com/forum/#!forum/hockeypuck-devel" target="_blank">mailing list</a>.
   </p>
   <p>
-    In code reviews, I&#39;ll look &amp; ask for:
+    In code reviews, I'll look and ask for:
   </p>
   <ul>
     <li>Correctness. Does it do what it claims to?</li>
     <li>Succinct and appropriate naming.</li>
     <li>General Go style (<a href="https://golang.org/doc/effective_go.html" target="_blank">Effective Go</a>, etc.) and codebase fit. When in doubt, ask.</li>
-    <li>Godoc comments on public symbols (an area I&#39;d like to improve)</li>
+    <li>Godoc comments on public symbols (an area I'd like to improve)</li>
     <li>Adequate test coverage (ditto)</li>
   </ul>
         <h2>Authors</h2>
