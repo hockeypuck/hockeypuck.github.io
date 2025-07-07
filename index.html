@@ -8,8 +8,7 @@
   <body>
     <div id="topbar" class="wide">
       <div class="container">
-        <div id="heading">Hockeypuck
-          OpenPGP Public Keyserver
+        <div id="heading">Hockeypuck OpenPGP Keyserver
         </div>
       </div>
     </div>
@@ -33,17 +32,13 @@
           </div>
   <h1 id="TOC_1.">1. About</h1>
   <p>
-    Hockeypuck is an OpenPGP <a href="https://en.wikipedia.org/wiki/Key_server_(cryptographic)" target="_blank">public keyserver</a>.
+    Hockeypuck is an OpenPGP <a href="https://en.wikipedia.org/wiki/Key_server_(cryptographic)" target="_blank">keyserver</a>.
   </p>
   <h1 id="TOC_2.">2. Latest Release</h1>
   <p>
     The latest <a href="https://github.com/hockeypuck/hockeypuck/releases" target="_blank">release</a> of
     Hockeypuck is
-    <a href="https://github.com/hockeypuck/hockeypuck/releases/tag/2.3.0" target="_blank">2.3.0</a>.
-  </p>
-  <p>
-    Hockeypuck 2.x is a significant redesign of the original <a href="1x.html" target="_self">Hockeypuck 1.x</a>,
-    which is now deprecated. All bug fixes and new development will be on 2.x releases.
+    <a href="https://github.com/hockeypuck/hockeypuck/releases/tag/2.3" target="_blank">2.3</a>.
   </p>
   <h1 id="TOC_3.">3. Features</h1>
   <h2 id="TOC_3.1.">3.1. OpenPGP Standards</h2>
@@ -53,28 +48,27 @@
     As this draft is a work in progress, Hockeypuck features may not exactly correspond to the current draft specification.
   </p>
   <p>
-    Public key material conforming to <a href="https://tools.ietf.org/html/rfc4880" target="_blank">RFC 4880</a> is supported by the keyserver, as
-    are <a href="https://tools.ietf.org/html/rfc6637" target="_blank">RFC 6637</a> ECC keys.
-    As-of-yet non-standard key material, such as v4 Ed25519 keys, may also be distributed by Hockeypuck.
+    Public key material conforming to <a href="https://tools.ietf.org/html/rfc4880" target="_blank">RFC 4880</a> is supported by the keyserver,
+    as are <a href="https://tools.ietf.org/html/rfc6637" target="_blank">RFC 6637</a> ECC keys and Legacy Ed25519 keys.
+    <a href="https://tools.ietf.org/html/rfc9580" target="_blank">RFC 9580</a> support is planned for version 2.4.
   </p>
   <h2 id="TOC_3.2.">3.2. SKS Reconciliation Protocol</h2>
   <p>
-    Hockeypuck can synchronize public key material with SKS and other Hockeypuck
-    servers. Recon protocol support is provided with the
-    <a href="https://gopkg.in/hockeypuck/conflux.v2" target="_blank">Conflux</a> package.
+    Hockeypuck can synchronize public key material with other Hockeypuck servers via the SKS protocol.
+    Recon is implemented by the <a href="https://gopkg.in/hockeypuck/conflux.v2" target="_blank">Conflux</a> package.
+  </p>
+  <p>
+    Hockeypuck also supports PKS sync to non-SKS-compatible keyservers over email, HKP, and VKS, however it does not (yet) support receiving public keys by email.
   </p>
   <h2 id="TOC_3.3.">3.3. Modular storage backend</h2>
   <p>
-    Hockeypuck uses PostgreSQL ≥ 13 (tested up to v16) for storing indexed key
-    material. The architecture supports additional storage backends, which must
-    implement a simple set of Go interfaces.
+    Hockeypuck uses PostgreSQL ≥ 13 (tested up to v16) for storing public key material.
+    The architecture allows for arbitrary storage backends, however only PostgreSQL is currently supported.
   </p>
   <h2 id="TOC_3.4.">3.4. Flexible rendering</h2>
   <p>
-    Hockeypuck internally represents key material with an arbitrary document model
-    that can be used with web applications by rendering it to JSON in responses.
-    HTML responses can be customized by authoring a template that operates on the
-    document model.
+    Hockeypuck internally represents key material with a JSON document model that can be used with web applications.
+    HTML responses can be customized by authoring a template that operates on the document model.
   </p>
   <h1 id="TOC_4.">4. Install</h1>
   <p>
@@ -98,13 +92,12 @@
   </ul>
   <h1 id="TOC_6.">6. License</h1>
   <p>
-    Copyright 2012-2024 Casey Marshall and the <a href="https://github.com/hockeypuck/hockeypuck/blob/master/CONTRIBUTORS">Hockeypuck contributors</a>.
+    Copyright 2012-2025 Casey Marshall and the <a href="https://github.com/hockeypuck/hockeypuck/blob/master/CONTRIBUTORS">Hockeypuck contributors</a>.
     Hockeypuck is distributed under the <a href="https://www.gnu.org/licenses/agpl-3.0.html" target="_blank">Affero GNU Public License, version 3</a>.
   </p>
   <p>
-    In general, any use of Hockeypuck privately within an organization (including a
-    company) is fine. Redistribution kicks in only when you publish services to
-    other parties.
+    In general, any use of Hockeypuck privately within an organization (including a company) is fine.
+    Redistribution kicks in only when you publish services to other parties.
   </p>
   <p>
     The AGPL license (and my intent in licensing it such) DOES NOT permit the following distribution scenarios:
