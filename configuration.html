@@ -212,6 +212,13 @@ nworkers=8
 driver="postgres-jsonb"
 dsn="database=hkp host=/var/run/postgresql port=5432 sslmode=disable"</pre></div>
   <p>
+    <ul>
+      <li><code>driver</code> is the database driver to use (only "postgres-jsonb" is currently implemented)</li>
+      <li><code>dsn</code> is the connection string for the database</li>
+      <li><code>reindexOnStartup</code> controls whether schema migration checks are performed on startup (default true)</li>
+    </ul>
+  </p>
+  <p>
     See the <a href="https://godoc.org/github.com/lib/pq" target="_blank">pq driver package documentation</a> for details on how to construct the connection string.
   </p>
 
