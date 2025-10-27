@@ -215,11 +215,18 @@ dsn="database=hkp host=/var/run/postgresql port=5432 sslmode=disable"</pre></div
     <ul>
       <li><code>driver</code> is the database driver to use (only "postgres-jsonb" is currently implemented)</li>
       <li><code>dsn</code> is the connection string for the database</li>
-      <li><code>reindexOnStartup</code> controls whether schema migration checks are performed on startup (default true)</li>
+      <li><code>reindexOnStartup</code> controls whether database reindexing is performed on startup (default true)</li>
+      <li><code>reindexGraceSecs</code> minimum period (in seconds) between reindexing passes (default 1 week)</li>
     </ul>
   </p>
   <p>
     See the <a href="https://godoc.org/github.com/lib/pq" target="_blank">pq driver package documentation</a> for details on how to construct the connection string.
+  </p>
+  <p>
+    When upgrading between minor versions, the database schema may change, and reindexing may be required.
+    By default (since version 2.3) hockeypuck will perform reindexing automatically on startup unless configured otherwise.
+    While hockeyuck will continue to function if reindexing is disabled, search performance may be degraded.
+    In addition, upgrades to newer minor versions are NOT supported unless the current minor version has reindexed the database at least once.
   </p>
 
   <h3 id="TOC_1.3.2.">1.3.2. Headers</h3>
