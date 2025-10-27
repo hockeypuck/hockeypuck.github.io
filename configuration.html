@@ -226,7 +226,10 @@ dsn="database=hkp host=/var/run/postgresql port=5432 sslmode=disable"</pre></div
     When upgrading between minor versions, the database schema may change, and reindexing may be required.
     By default (since version 2.3) hockeypuck will perform reindexing automatically on startup unless configured otherwise.
     While hockeyuck will continue to function if reindexing is disabled, search performance may be degraded.
-    In addition, upgrades to newer minor versions are NOT supported unless the current minor version has reindexed the database at least once.
+    In addition, upgrades to newer minor versions will not work correctly unless the current minor version has reindexed the database at least once.
+  </p>
+  <p>
+    To upgrade across major versions, or more than one minor version, <a href="upgrading.html#TOC_1.2.">hockeypuck-reload</a> should be invoked after upgrading and before starting up.
   </p>
 
   <h3 id="TOC_1.3.2.">1.3.2. Headers</h3>
