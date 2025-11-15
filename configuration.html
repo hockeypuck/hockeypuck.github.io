@@ -216,7 +216,8 @@ dsn="database=hkp host=/var/run/postgresql port=5432 sslmode=disable"</pre></div
       <li><code>driver</code> is the database driver to use (only "postgres-jsonb" is currently implemented)</li>
       <li><code>dsn</code> is the connection string for the database</li>
       <li><code>reindexOnStartup</code> controls whether database reindexing is performed on startup (default true)</li>
-      <li><code>reindexGraceSecs</code> is the minimum period (in seconds) between reindexing passes (default 1 week)</li>
+      <li><code>reindexDelaySecs</code> is the delay (in seconds) after startup before the first reindexing pass (default 5 minutes)</li>
+      <li><code>reindexIntervalSecs</code> is the interval (in seconds) between subsequent reindexing passes (default 1 week); a negative value means no subsequent reindexing pass</li>
     </ul>
   </p>
   <p>
