@@ -323,9 +323,11 @@ logname="conflux.recon"
   <div class="code"><pre>[hockeypuck.conflux.recon.partner.peer1]
 httpAddr="keys.example.com:11371"
 reconAddr="keys.example.com:11370"
+pksFailover=false
 [hockeypuck.conflux.recon.partner.peer2]
 httpAddr="juju-azure-dev-y9157oo521.cloudapp.net:11371"
 reconAddr="juju-azure-dev-y9157oo521.cloudapp.net:11370"
+pksFailover=true
 ...</pre></div>
   <p>
     Create a section for each partner <code>[hockeypuck.conflux.recon.partner.<em>NAME</em>]</code>,
