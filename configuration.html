@@ -279,6 +279,11 @@ pass="secret"
       <li><code>pass</code> is the password to be used for SMTP auth. (default empty)</li>
     </ul>
   </p>
+  <p>
+    It is conventional to use <code>pgp-public-keys</code> as the local part in a PKS email address, but not required.
+    The <code>from</code> setting should be set to an email address that can receive replies, bounce messages etc.
+    It is currently only used for <code>mailto:</code> PKS targets, but may be included in hkp[s] metadata in a future release.
+  </p>
 
   <h2 id="TOC_1.4.">1.4. Recon</h2>
   <p>
