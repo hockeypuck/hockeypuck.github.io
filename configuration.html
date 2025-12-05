@@ -219,6 +219,7 @@ dsn="database=hkp host=/var/run/postgresql port=5432 sslmode=disable"</pre></div
       <li><code>reindexStartupDelaySecs</code> is the delay (in seconds) after startup before the first reindexing pass (default 5 minutes)</li>
       <li><code>reindexLoadDelaySecs</code> is the delay (in seconds) after (re)loading the database before the first reindexing pass (default 1 day)</li>
       <li><code>reindexIntervalSecs</code> is the interval (in seconds) between subsequent reindexing passes (default 1 week); a negative value means no subsequent reindexing pass</li>
+      <li><code>requestQueryLimit</code> is the maximum number of entries that will be returned to the user from a single query</li>
     </ul>
   </p>
   <p>
