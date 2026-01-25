@@ -17,22 +17,22 @@
       <div class="container">
           <div id="toc">
   <ul>
-    <li><a href="#TOC_1.">Dumping keyfiles</a></li>
+    <li><a href="#TOC_1">Dumping keyfiles</a></li>
   <ul>
-    <li><a href="#TOC_1.1.">Stop the Hockeypuck service</a></li>
+    <li><a href="#TOC_1.1">Stop the Hockeypuck service</a></li>
   <ul>
-    <li><a href="#TOC_1.1.1.">Minimizing downtime</a></li>
+    <li><a href="#TOC_1.1.1">Minimizing downtime</a></li>
   </ul>
-    <li><a href="#TOC_1.2.">Dump keyfiles</a></li>
+    <li><a href="#TOC_1.2">Dump keyfiles</a></li>
   </ul>
   </ul>
           </div>
-  <h1 id="TOC_1.">1. Dumping keyfiles</h1>
-  <h2 id="TOC_1.1.">1.1. Stop the Hockeypuck service</h2>
+  <h1 id="TOC_1">1. Dumping keyfiles</h1>
+  <h2 id="TOC_1.1">1.1. Stop the Hockeypuck service</h2>
   <p>
     Currently, Hockeypuck must be down in order to dump keyfiles.
   </p>
-  <h3 id="TOC_1.1.1.">1.1.1. Minimizing downtime</h3>
+  <h3 id="TOC_1.1.1">1.1.1. Minimizing downtime</h3>
   <ul>
     <li>Stop Hockeypuck</li>
     <li>Copying the configured prefix tree to a backup location</li>
@@ -40,7 +40,7 @@
     <li>Create a <code>hockeypuck-dump.conf</code> that references the backup prefix tree.</li>
     <li>Run `hockeypuck-dump -config hockeypuck-dump.conf`.</li>
   </ul>
-  <h2 id="TOC_1.2.">1.2. Dump keyfiles</h2>
+  <h2 id="TOC_1.2">1.2. Dump keyfiles</h2>
   <div class="code"><pre>hockeypuck-dump -config /etc/hockeypuck/hockeypuck.conf -path /path/to/keyfiles</pre></div>
   <p>
     This will create files sequenced as <code>hkp-dump-NNNN.pgp</code>.

@@ -17,34 +17,34 @@
       <div class="container">
           <div id="toc">
   <ul>
-    <li><a href="#TOC_1.">Install with Docker</a></li>
-    <li><a href="#TOC_2.">Prerequisites</a></li>
-    <li><a href="#TOC_3.">Install Hockeypuck</a></li>
-    <li><a href="#TOC_4.">Configure Hockeypuck</a></li>
-    <li><a href="#TOC_5.">Populate and start the service</a></li>
-    <li><a href="#TOC_6.">Make available as HTTPS</a></li>
+    <li><a href="#TOC_1">Install with Docker</a></li>
+    <li><a href="#TOC_2">Prerequisites</a></li>
+    <li><a href="#TOC_3">Install Hockeypuck</a></li>
+    <li><a href="#TOC_4">Configure Hockeypuck</a></li>
+    <li><a href="#TOC_5">Populate and start the service</a></li>
+    <li><a href="#TOC_6">Make available as HTTPS</a></li>
   </ul>
   </ul>
           </div>
-  <h1 id="TOC_1.">1. Install with Docker</h1>
+  <h1 id="TOC_1">1. Install with Docker</h1>
   <p>
   Probably the simplest way to get up to speed with Hockeypuck is using <code>Docker</code> and <code>docker-compose</code>.
   </p>
-  <h1 id="TOC_2.">2. Prerequisites</h1>
+  <h1 id="TOC_2">2. Prerequisites</h1>
   <p>
   Any host being able to run a somewhat recent version of <code>git</code> and <code>docker-compose</code> is suitable.
   </p>
-  <h1 id="TOC_3.">3. Install Hockeypuck</h1>
+  <h1 id="TOC_3">3. Install Hockeypuck</h1>
   <div class="code"><pre>git clone --config core.autocrlf=false https://github.com/hockeypuck/hockeypuck
 cd hockeypuck/contrib/docker-compose/devel
 docker-compose build</pre></div>
   <p>Beware that if you are building a docker image under Windows, you MUST disable <code>autocrlf</code> as above,
     <a href="https://stackoverflow.com/questions/53165471/building-docker-images-on-windows-entrypoint-script-no-such-file-or-directory">otherwise the docker container will fail to start</a>.</p>
-  <h1 id="TOC_4.">4. Configure Hockeypuck</h1>
+  <h1 id="TOC_4">4. Configure Hockeypuck</h1>
   <p>
   Edit the <a href="configuration.html" target="_self">configuration</a> file in <code>./etc/hockeypuck.conf</code> as necessary.
   </p>
-  <h1 id="TOC_5.">5. Populate and start the service</h1>
+  <h1 id="TOC_5">5. Populate and start the service</h1>
   <p>
   Populate the <code>./keydump/</code> directory with a keydump, e.g. from a location listed in the <a href="https://github.com/hockeypuck/hockeypuck/blob/master/contrib/data-sources.md">Data Sources</a>.
   </p>
@@ -52,7 +52,7 @@ docker-compose build</pre></div>
   <div class="code"><pre>docker-compose up -d</pre></div>
   <p>This will first import the keydump; expect this to take a day at least. To follow the progress or see error messages, use:</p>
   <div class="code"><pre>docker-compose logs --follow</pre></div>
-  <h1 id="TOC_6.">6. Make available as HTTPS</h1>
+  <h1 id="TOC_6">6. Make available as HTTPS</h1>
   <p>The easiest way to make this or any other service available under HTTPS is to use <a href="https://github.com/SteveLTN/https-portal">https-portal</a>. Clone it in a separate directory, and edit <code>docker-compose.yml</code> to include:</p>
   <div class="code"><pre>environment:
   DOMAINS: |

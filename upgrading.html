@@ -16,22 +16,22 @@
       <div class="container">
           <div id="toc">
   <ul>
-    <li><a href="#TOC_1.">Upgrading Hockeypuck</a></li>
+    <li><a href="#TOC_1">Upgrading Hockeypuck</a></li>
     <ul>
-      <li><a href="#TOC_1.1.">Post-upgrade tasks (Minor next-version upgrade)</a></li>
+      <li><a href="#TOC_1.1">Post-upgrade tasks (Minor next-version upgrade)</a></li>
       <ul>
-        <li><a href="#TOC_1.1.1.">Filter changes and PKS failover</a></li>
+        <li><a href="#TOC_1.1.1">Filter changes and PKS failover</a></li>
       </ul>
       <ul>
-        <li><a href="#TOC_1.1.2.">Other changes</a></li>
+        <li><a href="#TOC_1.1.2">Other changes</a></li>
       </ul>
     </ul>
     <ul>
-      <li><a href="#TOC_1.2.">Post-upgrade tasks (Major or skip-version upgrade)</a></li>
+      <li><a href="#TOC_1.2">Post-upgrade tasks (Major or skip-version upgrade)</a></li>
     </ul>
   </ul>
           </div>
-  <h1 id="TOC_1.">1. Upgrading Hockeypuck</h1>
+  <h1 id="TOC_1">1. Upgrading Hockeypuck</h1>
   <p>
     Hockeypuck generally does not need to be shut down while installing upgrades, but care must be taken on restart if upgrading across a major or minor version boundary.
   </p>
@@ -39,23 +39,23 @@
     <li>When upgrading to a newer patch version (e.g. from 2.2.3 to 2.2.4), no special care normally needs to be taken.</li>
     <li>When upgrading to a newer minor or major version, you should follow the post-upgrade tasks below.</li>
   </p>
-  <h2 id="TOC_1.1.">1.1. Post-upgrade tasks (Minor next-version upgrade)</h2>
+  <h2 id="TOC_1.1">1.1. Post-upgrade tasks (Minor next-version upgrade)</h2>
   <p>
     When upgrading to the next minor version (e.g. from 2.2 to 2.3), it is normally possible to upgrade in-place, with a few caveats.
-    If upgrading across more than one minor version at once (e.g. from 2.1 to 2.3), please see <a href="#TOC_1.2.">section 1.2</a>.
+    If upgrading across more than one minor version at once (e.g. from 2.1 to 2.3), please see <a href="#TOC_1.2">section 1.2</a>.
   </p>
-  <h2 id="TOC_1.1.1.">1.1.1. Filter changes and PKS failover</h2>
+  <h2 id="TOC_1.1.1">1.1.1. Filter changes and PKS failover</h2>
   <p>
-    Changes to the SKS sync filters may happen between minor versions, which will temporarily prevent sync between SKS partners running different minor versions, unless <a href="configuration.html#TOC_1.4.1.">PKS failover</a> is configured.
+    Changes to the SKS sync filters may happen between minor versions, which will temporarily prevent sync between SKS partners running different minor versions, unless <a href="configuration.html#TOC_1.4.1">PKS failover</a> is configured.
     You do not normally need to configure PKS failover on all partners, just the ones that are likely to be running a different minor version.
     PKS failover is less efficient than SKS sync, but can be used to prevent split-brain scenarios during a rolling upgrade process.
   </p>
-  <h2 id="TOC_1.1.2.">1.1.2. Other changes</h2>
+  <h2 id="TOC_1.1.2">1.1.2. Other changes</h2>
   <p>
     In addition, specific minor upgrades may have exceptional breaking changes.
     You should consult the release notes of each new minor version for details.
   </p>
-  <h2 id="TOC_1.2.">1.2. Post-upgrade tasks (Major or skip-version upgrade)</h2>
+  <h2 id="TOC_1.2">1.2. Post-upgrade tasks (Major or skip-version upgrade)</h2>
   <p>
     When upgrading to a newer major version (e.g. from 1.x to 2.x), or when upgrading across more than one minor version at once (e.g. from 2.1 to 2.3) it is good practice to reload the database.
     Reloading is an in-place operation if upgrading to version 2.3 or higher.

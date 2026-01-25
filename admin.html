@@ -17,13 +17,13 @@
       <div class="container">
           <div id="toc">
   <ul>
-    <li><a href="#TOC_1.">Remote Administration</a></li>
+    <li><a href="#TOC_1">Remote Administration</a></li>
   <ul>
-    <li><a href="#TOC_1.1.">Key Deletion and Replacement</a></li>
+    <li><a href="#TOC_1.1">Key Deletion and Replacement</a></li>
   </ul>
   </ul>
           </div>
-  <h1 id="TOC_1.">1. Server Administration</h1>
+  <h1 id="TOC_1">1. Server Administration</h1>
   <p>
     An administrator may perform limited admin tasks by submitting signed requests over HTTP.
     All such tasks require an admin key or keys to be set <a href="configuration.html">in the configuration file</a>:
@@ -61,7 +61,7 @@ adminKeys=[
   <p>
     Where <code>$PATH</code> is the path of the operation.
   </p>
-  <h2 id="TOC_1.1.">1.1. Key Deletion and Replacement</h2>
+  <h2 id="TOC_1.1">1.1. Key Deletion and Replacement</h2>
   <p>
     BEWARE that deletion and replacement actions do not prevent the old key data from being resubmitted or resynced from the server's peers.
     To prevent changes being overwritten, the key's fingerprint should be added to the server's blacklist first.
