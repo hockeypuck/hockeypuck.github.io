@@ -17,41 +17,41 @@
       <div class="container">
           <div id="toc">
   <ul>
-    <li><a href="#TOC_1.">Deploying Hockeypuck with Juju</a></li>
+    <li><a href="#TOC_1">Deploying Hockeypuck with Juju</a></li>
   <ul>
-    <li><a href="#TOC_1.1.">Prerequisites</a></li>
-    <li><a href="#TOC_1.2.">Deploying Hockeypuck</a></li>
-    <li><a href="#TOC_1.3.">Accessing your new instance</a></li>
-    <li><a href="#TOC_1.4.">HTTP reverse-proxy</a></li>
+    <li><a href="#TOC_1.1">Prerequisites</a></li>
+    <li><a href="#TOC_1.2">Deploying Hockeypuck</a></li>
+    <li><a href="#TOC_1.3">Accessing your new instance</a></li>
+    <li><a href="#TOC_1.4">HTTP reverse-proxy</a></li>
   </ul>
-    <li><a href="#TOC_2.">Actions</a></li>
+    <li><a href="#TOC_2">Actions</a></li>
   <ul>
-    <li><a href="#TOC_2.1.">fetch-keyfiles</a></li>
+    <li><a href="#TOC_2.1">fetch-keyfiles</a></li>
   <ul>
-    <li><a href="#TOC_2.1.1.">Parameters</a></li>
+    <li><a href="#TOC_2.1.1">Parameters</a></li>
   <ul>
-    <li><a href="#TOC_2.1.1.1.">src</a></li>
-    <li><a href="#TOC_2.1.1.2.">dest</a></li>
-  </ul>
-  </ul>
-    <li><a href="#TOC_2.2.">load-keyfiles</a></li>
-  <ul>
-    <li><a href="#TOC_2.2.1.">Parameters</a></li>
-  <ul>
-    <li><a href="#TOC_2.2.1.1.">path</a></li>
+    <li><a href="#TOC_2.1.1.1">src</a></li>
+    <li><a href="#TOC_2.1.1.2">dest</a></li>
   </ul>
   </ul>
-  </ul>
-    <li><a href="#TOC_3.">Peering</a></li>
+    <li><a href="#TOC_2.2">load-keyfiles</a></li>
   <ul>
-    <li><a href="#TOC_3.1.">Peering with Relations</a></li>
-    <li><a href="#TOC_3.2.">Peering with Configuration</a></li>
+    <li><a href="#TOC_2.2.1">Parameters</a></li>
+  <ul>
+    <li><a href="#TOC_2.2.1.1">path</a></li>
   </ul>
-    <li><a href="#TOC_4.">Example</a></li>
+  </ul>
+  </ul>
+    <li><a href="#TOC_3">Peering</a></li>
+  <ul>
+    <li><a href="#TOC_3.1">Peering with Relations</a></li>
+    <li><a href="#TOC_3.2">Peering with Configuration</a></li>
+  </ul>
+    <li><a href="#TOC_4">Example</a></li>
   </ul>
           </div>
-  <h1 id="TOC_1.">1. Deploying Hockeypuck with Juju</h1>
-  <h2 id="TOC_1.1.">1.1. Prerequisites</h2>
+  <h1 id="TOC_1">1. Deploying Hockeypuck with Juju</h1>
+  <h2 id="TOC_1.1">1.1. Prerequisites</h2>
   <p>
     Juju 1.23.2 or later is recommended to make full use of this charm&#39;s
     <a href="https://jujucharms.com/docs/stable/actions" target="_blank">juju actions</a>. Install juju with:
@@ -66,7 +66,7 @@ sudo apt-get install juju-core</pre></div>
     Familiarity with Juju and a bootstrapped environment is assumed. Read the
     <a href="https://jujucharms.com/docs/" target="_blank">Juju Documentation</a> to get started.
   </p>
-  <h2 id="TOC_1.2.">1.2. Deploying Hockeypuck</h2>
+  <h2 id="TOC_1.2">1.2. Deploying Hockeypuck</h2>
   <p>
     Deploy a Hockeypuck service:
   </p>
@@ -77,7 +77,7 @@ sudo apt-get install juju-core</pre></div>
   <div class="code"><pre>juju deploy mongodb
 juju add-relation mongodb hockeypuck
 juju expose hockeypuck</pre></div>
-  <h2 id="TOC_1.3.">1.3. Accessing your new instance</h2>
+  <h2 id="TOC_1.3">1.3. Accessing your new instance</h2>
   <p>
     Find the <code>public-address</code> of the Hockeypuck workload. For example:
   </p>
@@ -112,7 +112,7 @@ services:
     You should be able to access the keyserver at the listed public address,
     <code>juju-azure-dev-y9157oo521.cloudapp.net:11371</code>
   </p>
-  <h2 id="TOC_1.4.">1.4. HTTP reverse-proxy</h2>
+  <h2 id="TOC_1.4">1.4. HTTP reverse-proxy</h2>
   <p>
     Expose Hockeypuck on port 80 behind haproxy.
   </p>
@@ -126,17 +126,17 @@ juju expose haproxy</pre></div>
 juju add-relation hockeypuck:website squid-reverseproxy
 juju set squid-reverseproxy port=11371
 juju expose squid</pre></div>
-  <h1 id="TOC_2.">2. Actions</h1>
+  <h1 id="TOC_2">2. Actions</h1>
   <p>
     The <a href="https://jujucharms.com/u/hockeypuck/hockeypuck/trusty/" target="_blank">Hockeypuck charm</a> provides
     several useful Juju actions for your new keyserver.
   </p>
-  <h2 id="TOC_2.1.">2.1. fetch-keyfiles</h2>
+  <h2 id="TOC_2.1">2.1. fetch-keyfiles</h2>
   <p>
     <code>fetch-keyfiles</code> downloads OpenPGP binary keyfiles from a remote location to a local directory on the keyserver.
   </p>
-  <h3 id="TOC_2.1.1.">2.1.1. Parameters</h3>
-  <h4 id="TOC_2.1.1.1.">2.1.1.1. src</h4>
+  <h3 id="TOC_2.1.1">2.1.1. Parameters</h3>
+  <h4 id="TOC_2.1.1.1">2.1.1.1. src</h4>
   <p>
     Required. The remote location to fetch keyfiles from. This is expected to be a
     directory containing concatenated OpenPGP public keys in RFC 4880 binary
@@ -151,23 +151,23 @@ juju expose squid</pre></div>
     remote server hosting the files. Use sparingly on global pool dumps; otherwise
     mirror the files.
   </p>
-  <h4 id="TOC_2.1.1.2.">2.1.1.2. dest</h4>
+  <h4 id="TOC_2.1.1.2">2.1.1.2. dest</h4>
   <p>
     Local directory where the files will be stored. <code>/srv/hockeypuck/import</code> is the
     default if not specified.
   </p>
-  <h2 id="TOC_2.2.">2.2. load-keyfiles</h2>
+  <h2 id="TOC_2.2">2.2. load-keyfiles</h2>
   <p>
     Stops the hockeypuck service and loads keyfiles into Hockeypuck.
   </p>
-  <h3 id="TOC_2.2.1.">2.2.1. Parameters</h3>
-  <h4 id="TOC_2.2.1.1.">2.2.1.1. path</h4>
+  <h3 id="TOC_2.2.1">2.2.1. Parameters</h3>
+  <h4 id="TOC_2.2.1.1">2.2.1.1. path</h4>
   <p>
     Local directory where files will be loaded from. <code>/srv/hockeypuck/import</code> is the
     default.
   </p>
-  <h1 id="TOC_3.">3. Peering</h1>
-  <h2 id="TOC_3.1.">3.1. Peering with Relations</h2>
+  <h1 id="TOC_3">3. Peering</h1>
+  <h2 id="TOC_3.1">3.1. Peering with Relations</h2>
   <p>
     Assuming two Hockeypucks:
   </p>
@@ -185,7 +185,7 @@ juju deploy cs:~hockeypuck/trusty/hockeypuck hkp2</pre></div>
     Regardless of which service is <code>keymaster</code> or <code>gatekeeper</code>, both services will
     initiate and serve connections.
   </p>
-  <h2 id="TOC_3.2.">3.2. Peering with Configuration</h2>
+  <h2 id="TOC_3.2">3.2. Peering with Configuration</h2>
   <p>
     To peer with other keyservers (Hockeypuck or SKS servers) that aren&#39;t in your
     Juju environment, set the config option <code>recon_partners</code>. The format of this
@@ -198,7 +198,7 @@ juju deploy cs:~hockeypuck/trusty/hockeypuck hkp2</pre></div>
     This supports connecting to peers that expose these ports on different host
     addresses.
   </p>
-  <h1 id="TOC_4.">4. Example</h1>
+  <h1 id="TOC_4">4. Example</h1>
 <div class="image">
   <img src="juju-env.png" width="960">
 </div>
