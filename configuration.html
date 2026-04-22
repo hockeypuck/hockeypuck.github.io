@@ -153,11 +153,13 @@ logRequestDetails=false
   <div class="code"><pre>[hockeypuck.hkp.queries]
 selfSignedOnly=false
 keywordSearchDisabled=false
+enableInexact=false
 </pre></div>
   <p>
     <ul>
       <li><code>selfSignedOnly</code> serves only self-signatures, and drops third-party signatures. (default <code>false</code>)</li>
       <li><code>keywordSearchDisabled</code> only allows fingerprint and key ID queries - email addresses or full text searches are disabled. (default <code>false</code>)</li>
+      <li><code>enableInexact</code> allows keyword searches that do not exactly match the identity in a User ID, i.e. an email address or the full User ID string. (default <code>false</code> in 2.4 and later)</li>
     </ul>
   </p>
 
@@ -183,18 +185,30 @@ key="/path/to/key"
   <div class="code"><pre>[hockeypuck.openpgp]
 maxPacketLength=8192
 maxKeyLength=1048576
+nworkers=8
 blacklist=[
     # "DEADBEEFDEADBEEFDEADBEEFDEADBEEFDEADBEEF",
 ]
-nworkers=8
+enumerableDomains=[
+    # "example.com",
+]
 </pre></div>
   <p>
     <ul>
       <li><code>maxPacketLength</code> indicates the maximum size of a packet that is accepted by the OpenPGP engine</li>
       <li><code>maxKeyLength</code> indicates the maximum total size of a key that is accepted by the OpenPGP engine</li>
-      <li><code>blacklist</code> contains a list of key fingerprints that are not accepted by this server. This may be for abuse reasons, or because the key owner has requested their deletion.</li>
       <li><code>nworkers</code> is the number of worker threads (default <code>8</code>)</li>
+      <li><code>blacklist</code> contains a list of key fingerprints that are not accepted by this server. This may be for abuse reasons, or because the key owner has requested their deletion.</li>
+      <li><code>enumerableDomains</code> contains a list of domain parts for which this server will always return search results. Domain parts should only be included with the permission of the domain owner. (>=2.3.3)</li>
     </ul>
+  </p>
+  <p>
+    <code>enumerableDomains</code> is intended for use by organizational domain owners to allow search queries to return results for revoked keys.
+    It has two separate but complementary effects:
+    <ol>
+      <li>User IDs that are redacted due to hard revocation are still searchable if their domain part matches an enumerable domain.</li>
+      <li>HKPv1 keyword searches for the domain part only will return matching keys, even if <code>enableInexact</code> is not set to <code>true</code> (in 2.4 and later).</li>
+    </ol>
   </p>
 
   <h3 id="TOC_1.3.1">1.3.1. Storage</h3>
