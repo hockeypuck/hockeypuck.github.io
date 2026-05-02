@@ -183,6 +183,7 @@ key="/path/to/key"
   <h2 id="TOC_1.3">1.3. OpenPGP</h2>
   <div class="code"><pre>[hockeypuck.openpgp]
 maxPacketLength=8192
+maxSigPacketLength=65536
 maxKeyLength=1048576
 nworkers=8
 blacklist=[
@@ -194,12 +195,19 @@ enumerableDomains=[
 </pre></div>
   <p>
     <ul>
-      <li><code>maxPacketLength</code> indicates the maximum size of a packet that is accepted by the OpenPGP engine</li>
+      <li><code>maxPacketLength</code> indicates the maximum size of a non-signature packet that is accepted by the OpenPGP engine</li>
+      <li><code>maxSigPacketLength</code> indicates the maximum size of a signature packet that is accepted by the OpenPGP engine</li>
       <li><code>maxKeyLength</code> indicates the maximum total size of a key that is accepted by the OpenPGP engine</li>
       <li><code>nworkers</code> is the number of worker threads (default <code>8</code>)</li>
       <li><code>blacklist</code> contains a list of key fingerprints that are not accepted by this server. This may be for abuse reasons, or because the key owner has requested their deletion.</li>
       <li><code>enumerableDomains</code> contains a list of domain parts for which this server will always return search results. Domain parts should only be included with the permission of the domain owner. (>=2.3.3)</li>
     </ul>
+  </p>
+  <p>
+    <code>maxPacketLength</code> and <code>maxSigPacketLength</code> are designed to impede the distribution of excessively large objects via the keyservers.
+    They have different default values because PQC signatures are generally larger than other packets.
+    <code>maxKeyLength</code> similarly limits the total size of a TPK.
+    It is not recommended to change the default values, as mismatched configurations between SKS peers will cause increased sync churn.
   </p>
   <p>
     <code>enumerableDomains</code> is intended for use by organizational domain owners to allow search queries to return results for revoked keys.
