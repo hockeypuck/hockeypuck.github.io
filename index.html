@@ -48,9 +48,11 @@
     As this draft is a work in progress, Hockeypuck features may not exactly correspond to the current draft specification.
   </p>
   <p>
-    Public key material and certifications conforming to <a href="https://tools.ietf.org/html/rfc9580" target="_blank">RFC 9580</a> is supported by the keyserver.
-    ML-KEM and ML-DSA key material and certifications as per <a href="https://datatracker.ietf.org/doc/html/draft-ietf-openpgp-pqc" target="_blank">the OpenPGP PQC draft specification</a> are also distributed.
-    SLH-DSA-SHAKE algorithms are not yet supported.
+    Public keys and certifications conforming to <a href="https://tools.ietf.org/html/rfc9580" target="_blank">RFC 9580</a>
+    and <a href="https://tools.ietf.org/html/rfc9980" target="_blank">RFC 9980</a> are supported by the keyserver.
+    This includes SLH-DSA pure PQC keys, and ML-KEM and ML-DSA composite PQC keys with ECC curves 25519 and 448.
+    ML-KEM and ML-DSA with NIST and Brainpool curves as per <a href="https://datatracker.ietf.org/doc/html/draft-ietf-openpgp-nist-bp-comp" target="_blank">
+    draft-ietf-openpgp-nist-bp-comp</a> are not yet supported.
   </p>
   <p>
     v5 keys and certifications (GnuPG) are not currently supported due to <a href="https://lists.gnupg.org/pipermail/gnupg-users/2026-May/068298.html" target="_blank">several known interoperability problems</a>.
