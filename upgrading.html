@@ -67,7 +67,8 @@
   <div class="code"><pre>hockeypuck-reload -config /etc/hockeypuck/hockeypuck.conf</pre></div>
   <p>
     This will ensure that all storage schemas and search indexes are up to date.
-    It should take a similar amount of time to dumping and reloading the database (usually several hours), however it does not create any files or require any extra disk space.
+    It should take a similar amount of time to dumping and reloading the database (usually several hours), however it does not create any dump files and therefore requires less disk space.
+    Note that your postgres tables may increase in size temporarily; this can be reclaimed using <a href="https://www.postgresql.org/docs/current/sql-vacuum.html">VACUUM</a>.
   </p>
   <p>
     Once this has completed, Hockeypuck can be started up as normal.
